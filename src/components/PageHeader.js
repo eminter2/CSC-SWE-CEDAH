@@ -7,7 +7,7 @@ import meeting3 from '../asssets/meeting3.jpg'
 function PageHeader(){
     return(
         <div>
-        <Carousel controls={false}>
+        <Carousel controls={false} indicators={false} interval={2500}>
             <Carousel.Item>
             <img
                 className="d-block w-100"
