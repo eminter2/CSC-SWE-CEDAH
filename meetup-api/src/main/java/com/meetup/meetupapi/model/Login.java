@@ -6,15 +6,16 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class User {
-
+@Table(name = "logins")
+public class Login {
     @Id
-    private String id;
-    private String name;
-    private String email;
+    private int id;
+    private String username;
+    private String password;
 }
