@@ -26,12 +26,18 @@ Software Engineering (CTW) Group Project: Scheduling Engine
   - Windows: //TODO
   - Ubuntu: Installation Documentation [Here](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04)
   - Download: [Here](https://www.mysql.com/downloads/)
-- Create a local Database
-  <pre><code>$ mysql -u &lt;YOUR_USERNAME&gt; -p
+- Create a local Database<pre><code>$ mysql -u &lt;YOUR_USERNAME&gt; -p
   $ &lt;YOUR_PASSWORD&gt;
   $ CREATE DATABASE &lt;YOUR_DATABASE&gt;
   </code></pre>
-- Edit SpringBoot __application.properties__
+- Add SpringBoot __application.properties__
+  - create folder 'resources' in /meetup-api/src/
+  - create file 'application.properties'
+  - Enter the following:<pre><code>server.port = 8080
+spring.jpa.hibernate.ddl-auto=create
+spring.datasource.url=jdbc:mysql://localhost:3306/&lt;YOUR_DB&gt;?useJDBCCompliantTimezoneShift=true&serverTimezone=UTC
+spring.datasource.username=&lt;YOUR_USERNAME&gt;
+spring.datasource.password=&lt;YOUR_PASSWORD&gt;</code></pre> 
   - Verify server = 8080
   - Enter your Database Name you created into this url string
     - <pre><code>spring.datasource.url=jdbc:mysql://localhost:3306/&lt;YOUR_DATABASE&gt;?useJDBCCompliantTimezoneShift=true&serverTimezone=UTC</code></pre>
