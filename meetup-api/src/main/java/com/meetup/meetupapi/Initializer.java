@@ -21,15 +21,15 @@ class Initializer implements CommandLineRunner{
 
     @Override
     public void run(String... strings){
-        Stream.of("Software", "Banking", "IT",
-                "Sales").forEach(name -> repository.save(new Group(name)));
-        Group software = repository.findByName("software");
-        Meeting e = Meeting.builder().title("Software Service Team")
-                .description("Running on a strange choice of technology stack")
-                .date(Instant.parse("2020-03-09T16:37:00.000Z"))
-                .build();
-        software.setMeetings(Collections.singleton(e));
-        repository.save(software);
+        // Stream.of("Software", "Banking", "IT",
+        //         "Sales").forEach(name -> repository.save(new Group(name)));
+        // Group software = repository.findByName("software");
+        // Meeting e = Meeting.builder().title("Software Service Team")
+        //         .description("Running on a strange choice of technology stack")
+        //         .date(Instant.parse("2020-03-09T16:37:00.000Z"))
+        //         .build();
+        // software.setMeetings(Collections.singleton(e));
+        // repository.save(software);
 
         repository.findAll().forEach(System.out::println);
     }

@@ -6,7 +6,9 @@ import Header from './components/Header';
 class App extends React.Component {
   constructor(){
     super();
-    this.state = {};
+    this.state = {
+        body: []
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -14,6 +16,14 @@ class App extends React.Component {
   handleSubmit(event){
     event.preventDefault();
     alert('Form submission recognized')
+    this.checkLogin();
+  }
+
+  async checkLogin(){
+    console.log('hitting checklogin')
+    const response = await fetch('/api/login')
+    const returnBody = await response.json();
+    console.log('Returned: ', returnBody);
   }
 
   render(){
@@ -42,6 +52,8 @@ class App extends React.Component {
               Submit
             </Button>
           </Form>
+
+          <h1>Api Body: {this.state.body}</h1>
         </div>
       </div>
     );

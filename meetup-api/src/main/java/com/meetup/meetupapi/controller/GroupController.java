@@ -14,6 +14,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.net.URI;
 import java.net.URISyntaxException;
+import org.json.simple.JSONObject;
+
 
 @RestController
 @RequestMapping("/api")
@@ -24,6 +26,16 @@ class GroupController {
 
     public GroupController(GroupRepository groupRepository){
         this.groupRepository = groupRepository;
+    }
+
+    @GetMapping(path="/login")
+    public ResponseEntity<JSONObject> login(){
+        JSONObject jo = new JSONObject();
+        jo.put("name", "jon doe");
+        jo.put("age", "22");
+        jo.put("city", "chicago");
+        return ResponseEntity.ok().body(jo);
+        // return new ResponseEntity<JSONObject>(jo, HttpStatus.OK).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/groups")
@@ -38,12 +50,12 @@ class GroupController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/group")
-    ResponseEntity<Group> createGroup(@Valid @RequestBody Group group) throws URISyntaxException{
-        log.info("Request to create group: {}", group);
-        Group result = groupRepository.save(group);
-        return ResponseEntity.created(new URI("/api/group/" + result.getId())).body(result);
-    }
+    // @PostMapping("/group")
+    // ResponseEntity<Group> createGroup(@Valid @RequestBody Group group) throws URISyntaxException{
+    //     log.info("Request to create group: {}", group);
+    //     Group result = groupRepository.save(group);
+    //     return ResponseEntity.created(new URI("/api/group/" + result.getId())).body(result);
+    // }
 
 
     @PutMapping("/group/{id}")
