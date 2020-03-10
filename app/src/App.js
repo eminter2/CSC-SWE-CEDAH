@@ -52,8 +52,6 @@ class App extends React.Component {
               Submit
             </Button>
           </Form>
-
-          <h1>Api Body: {this.state.body}</h1>
         </div>
       </div>
     );
