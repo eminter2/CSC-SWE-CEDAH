@@ -31,7 +31,7 @@ Software Engineering (CTW) Group Project: Scheduling Engine
   $ CREATE DATABASE &lt;YOUR_DATABASE&gt;
   </code></pre>
 - Add SpringBoot __application.properties__
-  - create folder 'resources' in /meetup-api/src/
+  - create folder 'resources' in /meetup-api/src/main/
   - create file 'application.properties'
   - Enter the following:<pre><code>server.port = 8080
 spring.jpa.hibernate.ddl-auto=create
