@@ -7,5 +7,5 @@ import com.meetup.meetupapi.model.Login;
 
 @Component
 public interface LoginRepository extends JpaRepository<Login, Long>{
-    // Login findByName(String username);
+    Login findByUsername(String username);
 }

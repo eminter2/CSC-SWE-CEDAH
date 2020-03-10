@@ -1,11 +1,14 @@
 package com.meetup.meetupapi.controller;
 
 import com.meetup.meetupapi.repo.LoginRepository;
+import com.meetup.meetupapi.model.Login;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.json.simple.JSONObject;
+import java.util.Optional;
 
 
 @RestController
@@ -29,12 +32,19 @@ class MainController {
         // return new ResponseEntity<JSONObject>(jo, HttpStatus.OK).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+
     @GetMapping(path="/login/{username}")
-    public ResponseEntity<?> attemptLogin(@PathVariable String username){
-        JSONObject jo = new JSONObject();
-        jo.put("username", username);;
-        return ResponseEntity.ok().body(jo);
+    public ResponseEntity<?> findUser(@PathVariable String username){
+        Login login = loginRepository.findByUsername(username);
+        return ResponseEntity.ok().body(login);
     }
+
+    // @GetMapping(path="/login/{username}")
+    // public ResponseEntity<?> attemptLogin(@PathVariable String username){
+    //     JSONObject jo = new JSONObject();
+    //     jo.put("username", username);
+    //     return ResponseEntity.ok().body(jo);
+    // }
 
     //     @GetMapping("/group/{id}")
 //     ResponseEntity<?> getGroup(@PathVariable Long id){
