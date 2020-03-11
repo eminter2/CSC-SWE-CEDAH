@@ -15,12 +15,12 @@ function App() {
     let url = `/api/login/${username}&${password}`
     console.log('Fetching with username: ', username)
     fetch(url , {
-      method: "POST",
+      method: 'GET',
       cache: 'no-cache',
       credentials: 'same-origin',
     }).then((response) => {
-      console.log(response)
-      if(response.bodyUsed) setisAuthenticated(true)
+      // console.log('Response', response)      
+      if(response.ok) setisAuthenticated(true)
       else {
         setMessage("Username or Password are incorrect")
         setTimeout(() => {
