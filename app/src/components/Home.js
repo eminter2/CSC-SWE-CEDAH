@@ -11,20 +11,27 @@ function Home() {
   const [checked, setChecked] = useState(false);
   const [isAuthenticated, setisAuthenticated] = useState(false);
 
-  let newUser = {
+  let formUser = {
     username: username,
     password: password
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
+    //Login existing user
     if(!checked){
-      let url = `/api/login/${username}&${password}`
-      console.log('Fetching with username: ', username)
+      let url = '/api/login'
+      console.log('Fetching with username: ', formUser.username)
       fetch(url , {
-        method: 'GET',
+        method: 'POST',
         cache: 'no-cache',
         credentials: 'same-origin',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formUser)
       }).then((response) => {
         // console.log('Response', response)      
         if(response.ok) setisAuthenticated(true)
@@ -38,16 +45,18 @@ function Home() {
         console.log('Request Failed: ', error)
       })
     }
+    
+    //Register new user
     else {
       let url = '/api/register'
-      console.log(`Attempting registration for ${newUser.username}, password ${newUser.password}`)
+      console.log(`Attempting registration for ${formUser.username}, password ${formUser.password}`)
       fetch(url, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(newUser)
+        body: JSON.stringify(formUser)
       }).then(response => {
           let data = response.json()
           setMessage(`Account Created for ${data}`)

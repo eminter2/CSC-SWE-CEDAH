@@ -6,6 +6,7 @@ import com.meetup.meetupapi.repo.LoginRepository;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,13 +20,16 @@ class MainController {
         this.loginRepository = loginRepository;
     }
 
-    @GetMapping(path="/login/{username}&{password}")
-    public ResponseEntity<?> findUser(@PathVariable String username, @PathVariable String password){
+    
+    // Working -- commented out for oauth2
+    @PostMapping(path="/login")
+    public ResponseEntity<?> findUser(@Valid @RequestBody Login login) throws URISyntaxException {
+        String username = login.getUsername();
+        String password = login.getPassword();
         System.out.printf("\n Form: Username: %s, Password: %s", username, password);
         try{
-            Login login = loginRepository.findByUsername(username);
-            System.out.printf("\n Query: Username: %s, Password: %s", login.getUsername(), login.getPassword());
-            if(login.getPassword().equals(password)){ 
+            Login result = loginRepository.findByUsername(username);
+            if(result.getPassword().equals(password)){ 
                 return ResponseEntity.ok().body(login);
             }
             else throw new Exception();
