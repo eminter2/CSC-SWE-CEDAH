@@ -4,11 +4,9 @@ import com.meetup.meetupapi.repo.LoginRepository;
 import com.meetup.meetupapi.model.Login;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.json.simple.JSONObject;
-import java.util.Optional;
 
 
 @RestController
@@ -33,10 +31,17 @@ class MainController {
     }
 
 
-    @GetMapping(path="/login/{username}")
-    public ResponseEntity<?> findUser(@PathVariable String username){
-        Login login = loginRepository.findByUsername(username);
-        return ResponseEntity.ok().body(login);
+    @PostMapping(path="/login/{username}&{password}")
+    public ResponseEntity<?> findUser(@PathVariable String username, @PathVariable String password){
+        try{
+            Login login = loginRepository.findByUsername(username);
+            if(login.getPassword().equals(password)){ 
+                return ResponseEntity.ok().body(login);
+            }
+            else throw new Exception();
+        } catch(Exception e){
+            return ResponseEntity.ok().build();
+        }
     }
 
     // @GetMapping(path="/login/{username}")

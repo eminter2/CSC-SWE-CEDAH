@@ -12,17 +12,24 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    let url = `/api/login/${username}&${password}`
     console.log('Fetching with username: ', username)
-    const response = await fetch(`/api/login/${username}`)
-    const returnBody = await response.json().catch(error => { 
-      setMessage("Username/Password incorrect")
-      setTimeout(() => {
-        setMessage("");
-      }, 3000); })
-    if(returnBody){
-      console.log(returnBody)
-      setisAuthenticated(true);
-    }
+    fetch(url , {
+      method: "POST",
+      cache: 'no-cache',
+      credentials: 'same-origin',
+    }).then((response) => {
+      console.log(response)
+      if(response.bodyUsed) setisAuthenticated(true)
+      else {
+        setMessage("Username or Password are incorrect")
+        setTimeout(() => {
+          setMessage("")
+        }, 3000);
+      }
+    }).catch((error) => {
+      console.log('Request Failed: ', error)
+    })
   }
 
   return (
