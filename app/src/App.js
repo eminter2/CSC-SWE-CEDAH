@@ -8,28 +8,54 @@ function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [checked, setChecked] = useState(false);
   const [isAuthenticated, setisAuthenticated] = useState(false);
+
+  let newUser = {
+    username: username,
+    password: password
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let url = `/api/login/${username}&${password}`
-    console.log('Fetching with username: ', username)
-    fetch(url , {
-      method: 'GET',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-    }).then((response) => {
-      // console.log('Response', response)      
-      if(response.ok) setisAuthenticated(true)
-      else {
-        setMessage("Username or Password are incorrect")
-        setTimeout(() => {
-          setMessage("")
-        }, 3000);
-      }
-    }).catch((error) => {
-      console.log('Request Failed: ', error)
-    })
+    if(!checked){
+      let url = `/api/login/${username}&${password}`
+      console.log('Fetching with username: ', username)
+      fetch(url , {
+        method: 'GET',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+      }).then((response) => {
+        // console.log('Response', response)      
+        if(response.ok) setisAuthenticated(true)
+        else {
+          setMessage("Username or Password are incorrect")
+          setTimeout(() => {
+            setMessage("")
+          }, 3000);
+        }
+      }).catch((error) => {
+        console.log('Request Failed: ', error)
+      })
+    }
+    else {
+      let url = '/api/register'
+      console.log(`Attempting registration for ${newUser.username}, password ${newUser.password}`)
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newUser)
+      }).then(response => {
+          let data = response.json()
+          setMessage(`Account Created for ${data}`)
+      }).catch((error) => {
+        console.log("Error from server: ", error)
+      })
+    }
+    
   }
 
   return (
@@ -65,7 +91,7 @@ function App() {
                     onChange={e => setPassword(e.target.value)}/>
                 </Form.Group>
                 <Form.Group controlId="formBasicCheckbox">
-                  <Form.Check type="checkbox" label="I'm a New User" />
+                  <Form.Check type="checkbox" label="I'm a New User" onChange={e => setChecked(!checked)}/>
                 </Form.Group>
                 <Button variant="primary" type="submit">
                   Submit
