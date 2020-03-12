@@ -20,7 +20,6 @@ class MainController {
         this.loginRepository = loginRepository;
     }
 
-    
     // Working -- commented out for oauth2
     @PostMapping(path="/login")
     public ResponseEntity<?> findUser(@Valid @RequestBody Login login) throws URISyntaxException {
@@ -34,17 +33,25 @@ class MainController {
             }
             else throw new Exception();
         } catch(Exception e){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok().body("");
         }
     }
 
-
     @PostMapping(path="/register")
     public ResponseEntity<?> addUser(@Valid @RequestBody Login login) throws URISyntaxException{
-        System.out.printf("\n Form: Username: %s, Password: %s", login.getUsername(), login.getPassword());
-        Login result = loginRepository.save(login);
-        System.out.printf("\n Query: Username: %s, Password: %s", login.getUsername(), login.getPassword());
-        return ResponseEntity.created(new URI("/api/register/" + result.getId())).body(result);
+        String username = login.getUsername();
+        String password = login.getPassword();
+        System.out.printf("\n Form: Username: %s, Password: %s", username, password);
+        try{
+            System.out.printf("\n Query: Username: %s, Password: %s", username, password);
+            Login doesExist = loginRepository.findByUsername(username);
+            if(doesExist != null) throw new Exception();
+            Login result = loginRepository.save(login);
+            return ResponseEntity.ok().body(result);
+        } catch( Exception e){
+            System.out.println("\nUser already exists");
+            return ResponseEntity.ok().body("");
+        }
     }
 
 }
