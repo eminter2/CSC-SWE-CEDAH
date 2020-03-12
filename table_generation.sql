@@ -14,11 +14,11 @@ CREATE TABLE IF NOT EXISTS users (
     group_id int
     ); 
     
-CREATE TABLE IF NOT EXISTS groups (
+CREATE TABLE IF NOT EXISTS meeting (
 	id int auto_increment PRIMARY KEY,
     meeting_day varchar(255),
     meeting_start_time time,
-    meetin_end_time time,
+    meeting_end_time time,
     manager_user_id int
     ); 
     
