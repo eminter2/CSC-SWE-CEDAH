@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
+import { withRouter } from 'react-router-dom';
 import {Form, Button} from 'react-bootstrap';
 import './Home.css';
 import Header from './Header';
 
 
-function Home() {
+function Home(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -23,49 +24,65 @@ function Home() {
     if(!checked){
       let url = '/api/login'
       console.log('Fetching with username: ', formUser.username)
-      fetch(url , {
-        method: 'POST',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formUser)
-      }).then((response) => {
-        // console.log('Response', response)      
-        if(response.ok) setisAuthenticated(true)
-        else {
-          setMessage("Username or Password are incorrect")
-          setTimeout(() => {
-            setMessage("")
-          }, 3000);
+
+      const response = await fetch(url, {
+          method: 'POST',
+          cache: 'no-cache',
+          credentials: 'omit',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formUser)
         }
-      }).catch((error) => {
-        console.log('Request Failed: ', error)
-      })
+      );
+      const body = await response.text();
+      if (body === '') {
+        setMessage("Username or Password are incorrect")
+        setTimeout(() => {
+          setMessage("")
+        }, 3000);
+      } 
+      else {
+          setisAuthenticated(true)
+          setTimeout(() => {
+            props.history.push('/dashboard')
+          }, 1000)
+        }
     }
     
     //Register new user
     else {
       let url = '/api/register'
       console.log(`Attempting registration for ${formUser.username}, password ${formUser.password}`)
-      fetch(url, {
+      
+      const response = await fetch(url, {
         method: 'POST',
+        cache: 'no-cache',
+        credentials: 'omit',
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(formUser)
-      }).then(response => {
-          let data = response.json()
-          setMessage(`Account Created for ${data}`)
-      }).catch((error) => {
-        console.log("Error from server: ", error)
-      })
-    }
-    
+      });
+
+      const body = await response.text();
+      console.log('Registered user return body: ', body)
+      if (body === '') {
+        setMessage("Username already exists")
+        setTimeout(() => {
+          setMessage("")
+        }, 3000);
+      } 
+      else {
+        setisAuthenticated(true)
+        setTimeout(() => {
+          props.history.push('/dashboard')
+        }, 1000)
+      }   
   }
+}
 
   return (
     <div className="Home">
@@ -108,11 +125,13 @@ function Home() {
               </Form>
               </div>
             </div> : <div>
-              <h1>Welcome, {username}</h1>
+              <h1>Welcome, {username}!</h1>
+              <h3>Loading your information...</h3>
+              <p>Did you know belhblebelheb?</p>
             </div>
       }
     </div>
   );
 }
 
-export default Home;
+export default withRouter(Home);
