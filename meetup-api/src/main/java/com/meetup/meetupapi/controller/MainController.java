@@ -5,6 +5,9 @@ import com.meetup.meetupapi.repo.LoginRepository;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -19,11 +22,9 @@ class MainController {
     public MainController(LoginRepository loginRepository){
         this.loginRepository = loginRepository;
     }
-
     @RequestMapping(path="/meetings", method = { RequestMethod.GET, RequestMethod.POST })
-    public void findMeetings(){
-        System.out.println("\n\n\n\n\n\nQuerying the Db to find groups for email: ");
-        // return ResponseEntity.ok().body("userMeetings");
+    public ResponseEntity<?> findMeetings(Principal principal) throws URISyntaxException{
+        System.out.println("\n\n\n\n\n\nQuerying the Db to find groups for email: " + principal);
+        return ResponseEntity.ok().body("userMeetings");
     }
-
 }
