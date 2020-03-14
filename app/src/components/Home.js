@@ -113,55 +113,58 @@ function Home(props) {
       });
   }
 
-  return (
-    <div className="Home">
-      <Header login={login} logout={logout}/>
-      { 
-        !isAuthenticated ?
-          <div>
-            <h1>Login / SignUP</h1>
-            <div className="login-form">
-              <Form onSubmit={handleSubmit}>
-                <Form.Label 
-                  style={
-                    { color: 'red', 
-                      display: 'block', 
-                      textAlign: 'center'}
-                  }>{message}</Form.Label>
-                <Form.Group controlId="formGroupUsername">
-                  <Form.Label>Username</Form.Label>
-                  <Form.Control 
-                    type="text" 
-                    placeholder="Enter username" 
-                    value={username}
-                    onChange={e => setUsername(e.target.value)}/>
-                </Form.Group>
-      
-                <Form.Group controlId="formGroupPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control 
-                    type="password" 
-                    placeholder="Password" 
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}/>
-                </Form.Group>
-                <Form.Group controlId="formBasicCheckbox">
-                  <Form.Check type="checkbox" label="I'm a New User" onChange={e => setChecked(!checked)}/>
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                  Submit
-                </Button> 
-                <Button variant="light" type="submit" onClick={logout}>
-                  Log Out
-                </Button>   
-              </Form>
+  if(!isAuthenticated){
+    return (
+      <div className="Home">
+        <Header login={login} logout={logout}/>
+            <div>
+              <h1>Login / SignUP</h1>
+              <div className="login-form">
+                <Form onSubmit={handleSubmit}>
+                  <Form.Label 
+                    style={
+                      { color: 'red', 
+                        display: 'block', 
+                        textAlign: 'center'}
+                    }>{message}</Form.Label>
+                  <Form.Group controlId="formGroupUsername">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control 
+                      type="text" 
+                      placeholder="Enter username" 
+                      value={username}
+                      onChange={e => setUsername(e.target.value)}/>
+                  </Form.Group>
+        
+                  <Form.Group controlId="formGroupPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control 
+                      type="password" 
+                      placeholder="Password" 
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}/>
+                  </Form.Group>
+                  <Form.Group controlId="formBasicCheckbox">
+                    <Form.Check type="checkbox" label="I'm a New User" onChange={e => setChecked(!checked)}/>
+                  </Form.Group>
+                  <Button variant="primary" type="submit">
+                    Submit
+                  </Button> 
+                  <Button variant="light" type="submit" onClick={logout}>
+                    Log Out
+                  </Button>   
+                </Form>
+                </div>
               </div>
-            </div> : <div>
-              <h1>Welcome, {currentUser}</h1>
-            </div>
-      }
-    </div>
-  );
+      </div>
+    );
+  }
+  else {
+    props.history.push(`/dashboard`)
+    return(null);
+  }
+
+  
 }
 
 export default withCookies(Home);
