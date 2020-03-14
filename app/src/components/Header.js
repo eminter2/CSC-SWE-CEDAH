@@ -5,7 +5,7 @@ import meeting2 from '../assets/meeting2.jpeg';
 import meeting3 from '../assets/meeting3.jpg';
 
 
-const Header = () => {
+const Header = (props) => {
 
     return (
         <div className="header">
@@ -67,8 +67,8 @@ const Header = () => {
                     </NavDropdown>
                     </Nav>
                     <Nav>
-                        <Nav.Link href="#login">Login</Nav.Link>
-                        <Nav.Link href="#signup">SignUP</Nav.Link>
+                        <Nav.Link onClick={props.login}>Login</Nav.Link>
+                        <Nav.Link onClick={props.logout}>Logout</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

@@ -1,19 +1,46 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Form, Button} from 'react-bootstrap';
 import './Home.css';
 import Header from './Header';
+import {withCookies} from 'react-cookie';
 
 
-function Home() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+function Home(props) {
+  const [isAuthenticated, setisAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState("");
   const [message, setMessage] = useState("");
   const [checked, setChecked] = useState(false);
-  const [isAuthenticated, setisAuthenticated] = useState(false);
-
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  
   let formUser = {
     username: username,
     password: password
+  }
+
+  let {cookies} = props;
+  let csrfToken = cookies.get('XSRF-TOKEN');
+
+
+  //taking place of componentDidMount since this is a functional component
+  useEffect(() => {
+    console.log('Checking to see if you are familiar... 👀')
+    fetchUser()
+  }, [])
+
+  const fetchUser = async () => {
+    const response = await fetch('/api/user', {credentials: 'include'});
+    const body = await response.text();
+    if (body === '') {
+      console.log('Cookie NOT found. Get out of mah swamp')
+      setisAuthenticated(false)
+    }
+    else {
+      console.log('Cookie found, I know you')
+      setisAuthenticated(true)
+      console.log(JSON.parse(body)["given_name"])
+      setCurrentUser(JSON.parse(body)["given_name"])
+    }
   }
 
   const handleSubmit = async (event) => {
@@ -21,29 +48,30 @@ function Home() {
     
     //Login existing user
     if(!checked){
-      let url = '/api/login'
-      console.log('Fetching with username: ', formUser.username)
-      fetch(url , {
-        method: 'POST',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formUser)
-      }).then((response) => {
-        // console.log('Response', response)      
-        if(response.ok) setisAuthenticated(true)
-        else {
-          setMessage("Username or Password are incorrect")
-          setTimeout(() => {
-            setMessage("")
-          }, 3000);
-        }
-      }).catch((error) => {
-        console.log('Request Failed: ', error)
-      })
+      login()
+      // let url = '/api/login'
+      // console.log('Fetching with username: ', formUser.username)
+      // fetch(url , {
+      //   method: 'POST',
+      //   cache: 'no-cache',
+      //   credentials: 'same-origin',
+      //   headers: {
+      //       'Accept': 'application/json',
+      //       'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(formUser)
+      // }).then((response) => {
+      //   // console.log('Response', response)      
+      //   if(response.ok) setisAuthenticated(true)
+      //   else {
+      //     setMessage("Username or Password are incorrect")
+      //     setTimeout(() => {
+      //       setMessage("")
+      //     }, 3000);
+      //   }
+      // }).catch((error) => {
+      //   console.log('Request Failed: ', error)
+      // })
     }
     
     //Register new user
@@ -67,9 +95,27 @@ function Home() {
     
   }
 
+  const login = () => {
+    let port = (window.location.port ? ':' + window.location.port : '');
+      if (port === ':3000'){
+        port = ':8080';
+      }
+      window.location.href = '//' + window.location.hostname + port + '/private';
+  }
+
+  const logout = () => {
+    console.log('csrfToken: ', csrfToken)
+    fetch('/api/logout', {method: 'POST', credentials: 'include',
+      headers: {'X-XSRF-TOKEN': csrfToken}}).then(res => res.json())
+      .then(response => {
+        window.location.href = response.logoutUrl + "?id_token_hint=" +
+          response.idToken + "&post_logout_redirect_uri=" + window.location.origin;
+      });
+  }
+
   return (
     <div className="Home">
-      <Header/>
+      <Header login={login} logout={logout}/>
       { 
         !isAuthenticated ?
           <div>
@@ -104,15 +150,18 @@ function Home() {
                 </Form.Group>
                 <Button variant="primary" type="submit">
                   Submit
-                </Button>    
+                </Button> 
+                <Button variant="light" type="submit" onClick={logout}>
+                  Log Out
+                </Button>   
               </Form>
               </div>
             </div> : <div>
-              <h1>Welcome, {username}</h1>
+              <h1>Welcome, {currentUser}</h1>
             </div>
       }
     </div>
   );
 }
 
-export default Home;
+export default withCookies(Home);
