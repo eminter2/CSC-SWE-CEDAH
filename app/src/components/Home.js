@@ -36,63 +36,13 @@ function Home(props) {
       setisAuthenticated(false)
     }
     else {
-      console.log('Cookie found, I know you')
-      setisAuthenticated(true)
-      console.log(JSON.parse(body)["given_name"])
-      setCurrentUser(JSON.parse(body)["given_name"])
+      await pushToDashboard()
     }
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    //Login existing user
-    if(!checked){
-      login()
-      // let url = '/api/login'
-      // console.log('Fetching with username: ', formUser.username)
-      // fetch(url , {
-      //   method: 'POST',
-      //   cache: 'no-cache',
-      //   credentials: 'same-origin',
-      //   headers: {
-      //       'Accept': 'application/json',
-      //       'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(formUser)
-      // }).then((response) => {
-      //   // console.log('Response', response)      
-      //   if(response.ok) setisAuthenticated(true)
-      //   else {
-      //     setMessage("Username or Password are incorrect")
-      //     setTimeout(() => {
-      //       setMessage("")
-      //     }, 3000);
-      //   }
-      // }).catch((error) => {
-      //   console.log('Request Failed: ', error)
-      // })
-    }
-    
-    //Register new user
-    else {
-      let url = '/api/register'
-      console.log(`Attempting registration for ${formUser.username}, password ${formUser.password}`)
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formUser)
-      }).then(response => {
-          let data = response.json()
-          setMessage(`Account Created for ${data}`)
-      }).catch((error) => {
-        console.log("Error from server: ", error)
-      })
-    }
-    
+    login()
   }
 
   const login = () => {
@@ -100,7 +50,7 @@ function Home(props) {
       if (port === ':3000'){
         port = ':8080';
       }
-      window.location.href = '//' + window.location.hostname + port + '/private';
+      window.location.href = '//' + window.location.hostname + port + '/dashboard';
   }
 
   const logout = () => {
@@ -113,55 +63,35 @@ function Home(props) {
       });
   }
 
+  const pushToDashboard = () => {
+      props.history.push(`/dashboard`)
+  }
+
   if(!isAuthenticated){
     return (
       <div className="Home">
         <Header login={login} logout={logout}/>
-            <div>
+          {!isAuthenticated ?
+            <div> 
               <h1>Login / SignUP</h1>
               <div className="login-form">
-                <Form onSubmit={handleSubmit}>
-                  <Form.Label 
-                    style={
-                      { color: 'red', 
-                        display: 'block', 
-                        textAlign: 'center'}
-                    }>{message}</Form.Label>
-                  <Form.Group controlId="formGroupUsername">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control 
-                      type="text" 
-                      placeholder="Enter username" 
-                      value={username}
-                      onChange={e => setUsername(e.target.value)}/>
-                  </Form.Group>
-        
-                  <Form.Group controlId="formGroupPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control 
-                      type="password" 
-                      placeholder="Password" 
-                      value={password}
-                      onChange={e => setPassword(e.target.value)}/>
-                  </Form.Group>
-                  <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="I'm a New User" onChange={e => setChecked(!checked)}/>
-                  </Form.Group>
-                  <Button variant="primary" type="submit">
-                    Submit
-                  </Button> 
-                  <Button variant="light" type="submit" onClick={logout}>
-                    Log Out
-                  </Button>   
-                </Form>
-                </div>
+                <Button variant="light" type="submit" onClick={handleSubmit}>
+                  Log In / Sign Up
+                </Button>   
               </div>
+            </div>
+          : 
+            <div>
+              <h1>You've logged in you wanker!</h1>
+            </div>
+          }
       </div>
     );
   }
   else {
-    props.history.push(`/dashboard`)
-    return(null);
+    return(
+      null
+    );
   }
 
   
