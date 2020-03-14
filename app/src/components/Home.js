@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Form, Button} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import './Home.css';
 import Header from './Header';
 import {withCookies} from 'react-cookie';
@@ -7,20 +7,8 @@ import {withCookies} from 'react-cookie';
 
 function Home(props) {
   const [isAuthenticated, setisAuthenticated] = useState(false);
-  const [currentUser, setCurrentUser] = useState("");
-  const [message, setMessage] = useState("");
-  const [checked, setChecked] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  
-  let formUser = {
-    username: username,
-    password: password
-  }
-
   let {cookies} = props;
   let csrfToken = cookies.get('XSRF-TOKEN');
-
 
   //taking place of componentDidMount since this is a functional component
   useEffect(() => {
