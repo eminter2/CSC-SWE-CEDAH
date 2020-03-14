@@ -1,7 +1,8 @@
 #root {
   background: lightslategray;
 }
-.App {
+
+.Home {
   margin: auto;
   height: 100vh;
   max-width: 2000px;
