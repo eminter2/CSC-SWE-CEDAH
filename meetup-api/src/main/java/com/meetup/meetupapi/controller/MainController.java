@@ -20,31 +20,10 @@ class MainController {
         this.loginRepository = loginRepository;
     }
 
-    
-    // Working -- commented out for oauth2
-    @PostMapping(path="/login")
-    public ResponseEntity<?> findUser(@Valid @RequestBody Login login) throws URISyntaxException {
-        String username = login.getUsername();
-        String password = login.getPassword();
-        System.out.printf("\n Form: Username: %s, Password: %s", username, password);
-        try{
-            Login result = loginRepository.findByUsername(username);
-            if(result.getPassword().equals(password)){ 
-                return ResponseEntity.ok().body(login);
-            }
-            else throw new Exception();
-        } catch(Exception e){
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-
-    @PostMapping(path="/register")
-    public ResponseEntity<?> addUser(@Valid @RequestBody Login login) throws URISyntaxException{
-        System.out.printf("\n Form: Username: %s, Password: %s", login.getUsername(), login.getPassword());
-        Login result = loginRepository.save(login);
-        System.out.printf("\n Query: Username: %s, Password: %s", login.getUsername(), login.getPassword());
-        return ResponseEntity.created(new URI("/api/register/" + result.getId())).body(result);
+    @RequestMapping(path="/meetings", method = { RequestMethod.GET, RequestMethod.POST })
+    public void findMeetings(){
+        System.out.println("\n\n\n\n\n\nQuerying the Db to find groups for email: ");
+        // return ResponseEntity.ok().body("userMeetings");
     }
 
 }
