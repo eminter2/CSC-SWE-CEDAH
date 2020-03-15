@@ -2,50 +2,27 @@ import React, {useEffect, useState} from 'react';
 import Header from './Header';
 import {instanceOf} from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
+import getUser from '../api/User';
+import getUserGroups from '../api/UserGroups';
 
 const Dashboard = (props) => {
     let {cookies} = props;
     let csrfToken = cookies.get('XSRF-TOKEN');
     const [username, setUsername] = useState("")
-    const [email, setEmail] = useState("")
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        console.log(cookies)
-        getUser();
-        getUserGroups();
+        gatherData();
     }, [])
-    
-    const getUser = async () => {
-        try{ 
-            console.log('Getting user...')
-            const response = await fetch('/api/user', {credentials: 'include'});
-            const body = await response.text();
-            console.log('Retrieved user: ', JSON.parse(body)["given_name"],
-            '\nEmail: ', JSON.parse(body)["email"])
-            setUsername(JSON.parse(body)["given_name"])
-            setEmail(JSON.parse(body)["email"])
-        }
-        catch {
-            console.log("Something went wrong. Session Expired")
-        }
-    }
 
-    const getUserGroups = async () => {
-        try{
-            setLoading(true)
-            console.log('Attempting to retrieve groups')
-            const response = await fetch('/api/meetings', {method: 'POST', credentials: 'include',
-                headers: {'X-XSRF-TOKEN': csrfToken},
-                body: JSON.stringify(email)
-            });
-            const body = await response.text();
-            console.log(body)
+    const gatherData = async () => {
+        let {username, email} = await getUser()
+        setUsername(username)
+        setLoading(true)
+        await getUserGroups(csrfToken, email)
+        setTimeout(() => {
             setLoading(false)
-        }
-        catch(err){
-            console.log('Something went wrong: ', err);
-        }
+        }, 3000);
     }
 
     return (
