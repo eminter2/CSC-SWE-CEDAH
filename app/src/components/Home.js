@@ -14,7 +14,7 @@ function Home(props) {
   useEffect(() => {
     console.log('Checking to see if you are familiar... 👀')
     fetchUser()
-  }, [])
+  })
 
   const fetchUser = async () => {
     const response = await fetch('/api/user', {credentials: 'include'});
