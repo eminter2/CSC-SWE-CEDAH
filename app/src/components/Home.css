@@ -1,3 +1,14 @@
+#root {
+  background: lightslategray;
+}
+
+.Home {
+  margin: auto;
+  height: 100vh;
+  max-width: 2000px;
+  background: white;
+}
+
 h1 { 
   padding-top: 50px;
   text-align: center;

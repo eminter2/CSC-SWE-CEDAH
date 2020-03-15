@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import './Dashboard.css';
 import Header from './Header';
 import {instanceOf} from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
@@ -26,7 +27,7 @@ const Dashboard = (props) => {
     }
 
     return (
-        <div>
+        <div className="dashboard">
             <Header condensed={true} />
             <h1>Welcome to your Dashboard, {username}!</h1>
             {loading ? <p style={{textAlign: 'center'}}>loading...</p> : <p style={{textAlign: 'center'}}>here's ur content ideot</p>}
