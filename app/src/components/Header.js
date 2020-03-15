@@ -1,5 +1,5 @@
 import React from 'react';
-import {Nav, Navbar, NavDropdown, Carousel} from 'react-bootstrap';
+import {Nav, Navbar, NavDropdown, Carousel, Button} from 'react-bootstrap';
 import meeting1 from '../assets/meeting1.jpeg';
 import meeting2 from '../assets/meeting2.jpeg';
 import meeting3 from '../assets/meeting3.jpg';
@@ -25,11 +25,11 @@ const Header = (props) => {
                         </NavDropdown>
                         </Nav>
                         <Nav>
-                            {props.isAuthenticated ? 
-                                <Nav.Link onClick={props.login}>Login</Nav.Link>
+                        {props.isAuthenticated ? 
+                                <Button variant="success" onClick={props.logout}>Logout</Button>
                                 :
-                                <Nav.Link onClick={props.logout}>Logout</Nav.Link>
-                            }
+                                <Button variant="success" onClick={props.login}>Login/SignUP</Button>
+                        }
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
@@ -96,10 +96,11 @@ const Header = (props) => {
                             <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                         </NavDropdown>
                         </Nav>
-                        <Nav>
-                            <Nav.Link onClick={props.login}>Login</Nav.Link>
-                            <Nav.Link onClick={props.logout}>Logout</Nav.Link>
-                        </Nav>
+                        {props.isAuthenticated ? 
+                                <Button variant="success" onClick={props.logout}>Logout</Button>
+                                :
+                                <Button variant="success" onClick={props.login}>Login / Sign Up</Button>
+                        }
                     </Navbar.Collapse>
                 </Navbar>
             </div>
