@@ -41,16 +41,6 @@ function Home(props) {
       window.location.href = '//' + window.location.hostname + port + '/dashboard';
   }
 
-  const logout = () => {
-    console.log('csrfToken: ', csrfToken)
-    fetch('/api/logout', {method: 'POST', credentials: 'include',
-      headers: {'X-XSRF-TOKEN': csrfToken}}).then(res => res.json())
-      .then(response => {
-        window.location.href = response.logoutUrl + "?id_token_hint=" +
-          response.idToken + "&post_logout_redirect_uri=" + window.location.origin;
-      });
-  }
-
   const pushToDashboard = () => {
       props.history.push(`/dashboard`)
   }
@@ -58,7 +48,7 @@ function Home(props) {
   if(!isAuthenticated){
     return (
       <div className="Home">
-        <Header login={login} logout={logout}/>
+        <Header login={login} isAuthenticated={isAuthenticated}/>
           {!isAuthenticated ?
             <div> 
               <h1>Login / SignUP</h1>

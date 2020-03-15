@@ -26,9 +26,19 @@ const Dashboard = (props) => {
         }, 3000);
     }
 
+    const logout = () => {
+        console.log('csrfToken: ', csrfToken)
+        fetch('/api/logout', {method: 'POST', credentials: 'include',
+          headers: {'X-XSRF-TOKEN': csrfToken}}).then(res => res.json())
+          .then(response => {
+            window.location.href = response.logoutUrl + "?id_token_hint=" +
+              response.idToken + "&post_logout_redirect_uri=" + window.location.origin;
+          });
+      }
+
     return (
         <div className="dashboard">
-            <Header condensed={true} />
+            <Header condensed={true} logout={logout} isAuthenticated={true} />
             <h1>Welcome to your Dashboard, {username}!</h1>
             {loading ? <p style={{textAlign: 'center'}}>loading...</p> : <p style={{textAlign: 'center'}}>here's ur content ideot</p>}
         </div>
