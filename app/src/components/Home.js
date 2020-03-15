@@ -10,7 +10,6 @@ function Home(props) {
   let {cookies} = props;
   let csrfToken = cookies.get('XSRF-TOKEN');
 
-  //taking place of componentDidMount since this is a functional component
   useEffect(() => {
     console.log('Checking to see if you are familiar... 👀')
     fetchUser()
@@ -49,20 +48,21 @@ function Home(props) {
     return (
       <div className="Home">
         <Header login={login} isAuthenticated={isAuthenticated}/>
-          {!isAuthenticated ?
-            <div> 
-              <h1>Login / SignUP</h1>
-              <div className="login-form">
-                <Button variant="light" type="submit" onClick={handleSubmit}>
-                  Log In / Sign Up
-                </Button>   
-              </div>
-            </div>
-          : 
-            <div>
-              <h1>You've logged in you wanker!</h1>
-            </div>
-          }
+        <section className="pane-1">
+          <div className="hook-em">
+            <h1>Meet-UP</h1>
+            <p>Insert company slogan --something</p>
+          </div>
+          <div className="try-now">
+            <Button 
+              variant="outline-primary" 
+              type="submit" 
+              size="lg"
+              onClick={handleSubmit}>
+              Try it Now!
+            </Button>   
+          </div>
+        </section>
       </div>
     );
   }

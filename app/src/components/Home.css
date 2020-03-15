@@ -5,23 +5,6 @@
   background: white;
 }
 
-h1 { 
-  padding-top: 50px;
-  text-align: center;
-}
-.login-form {
-  display: flex;
-  height: 50vh;
-  justify-content: center;
-  align-items: center;
-}
-
-form {
-  width: 30%;
-  max-width: 500px;
-  min-width: 250px;
-}
-
 .carousel {
   height: 400;
   top: 0;
@@ -32,4 +15,26 @@ form {
 .carousel-inner {
   display: flex;
   align-items: center;
+}
+.pane-1 {
+  /* background: blue; */
+}
+.hook-em h1 { 
+  color: blue;
+  font-size: 200px;
+  padding-top: 50px;
+  text-align: center;
+}
+
+.try-now {
+  display: flex;
+  height: 50vh;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  width: 30%;
+  max-width: 500px;
+  min-width: 250px;
 }

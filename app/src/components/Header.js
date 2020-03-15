@@ -26,9 +26,9 @@ const Header = (props) => {
                         </Nav>
                         <Nav>
                         {props.isAuthenticated ? 
-                                <Button variant="success" onClick={props.logout}>Logout</Button>
+                                <Button variant="primary" onClick={props.logout}>Logout</Button>
                                 :
-                                <Button variant="success" onClick={props.login}>Login/SignUP</Button>
+                                <Button variant="primary" onClick={props.login}>Login/SignUP</Button>
                         }
                         </Nav>
                     </Navbar.Collapse>
@@ -97,9 +97,9 @@ const Header = (props) => {
                         </NavDropdown>
                         </Nav>
                         {props.isAuthenticated ? 
-                                <Button variant="success" onClick={props.logout}>Logout</Button>
+                                <Button variant="primary" onClick={props.logout}>Logout</Button>
                                 :
-                                <Button variant="success" onClick={props.login}>Login / Sign Up</Button>
+                                <Button variant="primary" onClick={props.login}>Login / Sign Up</Button>
                         }
                     </Navbar.Collapse>
                 </Navbar>
