@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Form, Button} from 'react-bootstrap';
+import {Redirect} from 'react-router-dom';
 import './Home.css';
 import Header from './Header';
-
 
 function Home() {
   const [username, setUsername] = useState("");
@@ -14,6 +14,10 @@ function Home() {
   let formUser = {
     username: username,
     password: password
+  }
+
+  if(localStorage.token){
+    return <Redirect to='/dashboard'/>
   }
 
   const handleSubmit = async (event) => {
