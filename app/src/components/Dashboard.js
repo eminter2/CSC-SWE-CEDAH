@@ -2,6 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import './Dashboard.css';
 import Header from './Header';
+import {withRouter} from 'react-router-dom';
 
 const Dashboard = (props) => {
 
@@ -35,4 +36,4 @@ const Dashboard = (props) => {
     )
 }
 
-export default Dashboard;
+export default withRouter(Dashboard);
