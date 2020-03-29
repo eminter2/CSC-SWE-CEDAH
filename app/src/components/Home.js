@@ -91,7 +91,8 @@ function Home() {
                     type="text" 
                     placeholder="Enter username" 
                     value={username}
-                    onChange={e => setUsername(e.target.value)}/>
+                    onChange={e => setUsername(e.target.value)}
+                    autoFocus={true}/>
                 </Form.Group>
       
                 <Form.Group controlId="formGroupPassword">
