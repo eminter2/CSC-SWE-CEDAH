@@ -33,7 +33,10 @@ function Home() {
         },
         body: JSON.stringify(formUser)
       }).then((response) => {
-        // console.log('Response', response)      
+        // console.log('Response', response.headers.get("Authorization")) 
+        let token = response.headers.get("Authorization").split("Bearer ")[1]
+        // console.log(token)
+        localStorage.setItem("token", token)    
         if(response.ok) setisAuthenticated(true)
         else {
           setMessage("Username or Password are incorrect")
