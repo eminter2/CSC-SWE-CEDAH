@@ -21,7 +21,7 @@ function Home() {
     
     //Login existing user
     if(!checked){
-      let url = '/api/login'
+      let url = '/login'
       console.log('Fetching with username: ', formUser.username)
       fetch(url , {
         method: 'POST',
@@ -48,7 +48,7 @@ function Home() {
     
     //Register new user
     else {
-      let url = '/api/register'
+      let url = '/users/sign-up'
       console.log(`Attempting registration for ${formUser.username}, password ${formUser.password}`)
       fetch(url, {
         method: 'POST',

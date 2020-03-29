@@ -7,6 +7,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import javax.validation.Valid;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.*;
 class MainController {
 
     private LoginRepository loginRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public MainController(LoginRepository loginRepository){
+    public MainController(LoginRepository loginRepository, BCryptPasswordEncoder bCryptPasswordEncoder){
         this.loginRepository = loginRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     
@@ -41,9 +44,12 @@ class MainController {
 
     @PostMapping(path="/register")
     public ResponseEntity<?> addUser(@Valid @RequestBody Login login) throws URISyntaxException{
+        String encPass = bCryptPasswordEncoder.encode(login.getPassword());
+        login.setPassword(encPass);
         System.out.printf("\n Form: Username: %s, Password: %s", login.getUsername(), login.getPassword());
+        System.out.printf("\n Encrypted Password:\n\tPassword: %s\n", encPass);
         Login result = loginRepository.save(login);
-        System.out.printf("\n Query: Username: %s, Password: %s", login.getUsername(), login.getPassword());
+        // System.out.printf("\n Query: Username: %s, Password: %s", login.getUsername(), login.getPassword());
         return ResponseEntity.created(new URI("/api/register/" + result.getId())).body(result);
     }
 
