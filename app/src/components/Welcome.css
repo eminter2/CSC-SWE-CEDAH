@@ -1,11 +1,12 @@
 #root {
-  background: lightslategray;
+  background: white;
 }
 .Home {
   margin: auto;
   height: 100vh;
   max-width: 2000px;
   background: white;
+  border: 2px solid black;
 }
 h1 { 
   padding-top: 50px;
