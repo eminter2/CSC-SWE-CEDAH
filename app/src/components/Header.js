@@ -1,21 +1,29 @@
-import React, {useState, useEffect} from 'react';
-import {Redirect, withRouter} from 'react-router-dom';
+import React, {useState} from 'react';
+import {Redirect} from 'react-router-dom';
 import {Nav, Navbar, NavDropdown, Button} from 'react-bootstrap';
 
 const Header = (props) => {
-    const [redirect, setRedirect] = useState(false);
+    const [loginRedirect, setLoginRedirect] = useState(false);
+    const [logoutRedirect, setLogout] = useState(false);
+
+    const login = () => {
+        setLoginRedirect(true)
+    }
 
     const logout = () => {
         localStorage.removeItem("token")
-        setRedirect(true)
+        setLogout(true)
     }
 
-    if(redirect) return <Redirect push to="/"/>
+    if (loginRedirect) return <Redirect push to="/login"/>
+    else if (logoutRedirect) return <Redirect to="/"/>
     else {
         return (
             <div className="header">                
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                    <Navbar.Brand>MeetUP</Navbar.Brand>
+                    <Navbar.Brand>
+                        <Nav.Link to="/">MeetUP</Nav.Link>
+                    </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
@@ -36,9 +44,9 @@ const Header = (props) => {
                                 <div>
                                     <Button 
                                         variant="light" 
-                                        onClick={props.login}
+                                        onClick={login}
                                         style={{margin: '0px 10px'}}>Login</Button>
-                                    <Button variant="primary" onClick={props.signup}>Sign Up</Button>
+                                    <Button variant="primary" onClick={login}>Sign Up</Button>
                                 </div>
                         }
                         </Nav>
@@ -49,4 +57,4 @@ const Header = (props) => {
     }
 }
 
-export default withRouter(Header);
+export default Header;
