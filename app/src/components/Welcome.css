@@ -8,31 +8,3 @@
   background: white;
   border: 2px solid black;
 }
-h1 { 
-  padding-top: 50px;
-  text-align: center;
-}
-.login-form {
-  display: flex;
-  height: 50vh;
-  justify-content: center;
-  align-items: center;
-}
-
-form {
-  width: 30%;
-  max-width: 500px;
-  min-width: 250px;
-}
-
-.carousel {
-  height: 400;
-  top: 0;
-  left: 0;
-  min-width: 660px;
-}
-
-.carousel-inner {
-  display: flex;
-  align-items: center;
-}
