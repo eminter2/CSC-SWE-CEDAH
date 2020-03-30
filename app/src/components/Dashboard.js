@@ -6,7 +6,6 @@ import {withRouter} from 'react-router-dom';
 
 const Dashboard = (props) => {
 
-    const [username, setUsername] = useState("")
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -16,21 +15,17 @@ const Dashboard = (props) => {
     const gatherData = async () => {
         // let {username, email} = await getUser()
         // setUsername(username)
-        // setLoading(true)
+        setLoading(true)
         // await getUserGroups(csrfToken, email)
         setTimeout(() => {
             setLoading(false)
         }, 3000);
     }
 
-    const logout = () => {
-        
-      }
-
     return (
         <div className="dashboard">
-            <Header condensed={true} logout={logout} isAuthenticated={true} />
-            <h1>Welcome to your Dashboard, {username}!</h1>
+            <Header isAuthenticated={true} />
+            <h1>Welcome to the Dashboard!</h1>
             {loading ? <p style={{textAlign: 'center'}}>loading...</p> : <p style={{textAlign: 'center'}}>here's ur content ideot</p>}
         </div>
     )
