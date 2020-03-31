@@ -1,34 +1,56 @@
- 
 import React, {useEffect, useState} from 'react';
 import './Dashboard.css';
 import Header from './Header';
+import Meeting from './Meeting';
 import {withRouter} from 'react-router-dom';
+import {Container} from 'react-bootstrap';
 
-const Dashboard = (props) => {
+const Dashboard = () => {
 
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
+    const [fakeMeetingList, setfakeMeetingList] = useState()
 
     useEffect(() => {
-        gatherData();
-    }, [])
+        createMeetings();
+    },[])
 
-    const gatherData = async () => {
-        // let {username, email} = await getUser()
-        // setUsername(username)
+    const createMeetings = () => {
+        let tempArray=[]
         setLoading(true)
-        // await getUserGroups(csrfToken, email)
-        setTimeout(() => {
-            setLoading(false)
-        }, 3000);
+        let count = 9;
+        while(count<18){
+            tempArray.push({
+                'MeetingNo': `Meeting ${count-8}`,
+                'Start': `${count}:00`,
+                'End': `${count}:30`,
+                'Host': 'Connor'
+            })
+        count+=1;
+        console.log(count)
+        }
+        setfakeMeetingList(tempArray)
+        setLoading(false)
     }
 
-    return (
-        <div className="dashboard">
-            <Header isAuthenticated={true} />
-            <h1>Welcome to the Dashboard!</h1>
-            {loading ? <p style={{textAlign: 'center'}}>loading...</p> : <p style={{textAlign: 'center'}}>here's ur content ideot</p>}
-        </div>
-    )
+    if(!loading){
+        // console.log('fakeMeetingList', fakeMeetingList, 'Type: ', typeof(fakeMeetingList))
+        const allMeetings = fakeMeetingList.map((meeting) => (<Meeting key={meeting.MeetingNo} meeting={meeting}/>))
+
+        return (
+            <div className="dashboard">
+                <Header isAuthenticated={true} />
+                <h1>Welcome to the Dashboard!</h1>
+                <Container>
+                    {allMeetings}
+                </Container>
+            </div>
+        )
+    }
+    else{
+        return (
+            <p>Loading...</p>
+        )
+    }
 }
 
 export default withRouter(Dashboard);
