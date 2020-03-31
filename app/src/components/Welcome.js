@@ -6,46 +6,45 @@ import Header from './Header';
 
 const Welcome = () => {
     return (
-      <div className="welcome">
+      <div className="page welcome">
         {!localStorage.token ? 
           <Header />:
           <Header isAuthenticated={true}/>
         }
+
         <section className="section 1" href="#about" >
           <h1>About things</h1>
         </section>
-
         <section className="section 2" href="#about">
           <h1>About things</h1>
         </section>
         <section className="section 3" href="#">
-        <h1>About things</h1>
-
-
+          <h1>About things</h1>
         </section>
 
-        <section className="section 4">
-        <h1>About things</h1>
 
-        </section>
-
-        <section className="footer">
-          <div className="links">
+        <Container fluid className="footer">
+          <Row md={4}>
+            <Col>
+              <h1>Branding</h1>
+            </Col>
+            <Col>
               <p>Something</p>
-              <p>Somethin2</p>
+              <p>Something2</p>
               <p>Something3</p>
-          </div>
-          <div className="certs">
+            </Col>
+            <Col>
               <p>Something</p>
-              <p>Somethin2</p>
-              <p>Something3</p>
-          </div>
-          <div className="space">
               <p>Something</p>
-              <p>Somethin2</p>
-              <p>Something3</p>
-          </div>
-        </section>
+              <p>Something</p>
+            </Col>
+            <Col>
+              <p>Something</p>
+              <p>Something</p>
+              <p>Something</p>
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
 }
