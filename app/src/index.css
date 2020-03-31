@@ -6,6 +6,10 @@ html::-webkit-scrollbar,
   display: none;
 }
 
+body, html, #root {
+  overflow: hidden;
+}
+
 /* Hide scrollbar for IE and Edge */
 body, html, #root, .page {
   -ms-overflow-style: none;
