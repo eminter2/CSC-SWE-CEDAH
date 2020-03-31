@@ -113,7 +113,10 @@ const Login = () => {
     else {
         return (
             <div className="page login">
-                <Header/>
+                {!localStorage.token ? 
+                    <Header />:
+                    <Header isAuthenticated={true}/>
+                }
                 <h1>Login / SignUP</h1>
                 <div className="login-form">
                     <Form 

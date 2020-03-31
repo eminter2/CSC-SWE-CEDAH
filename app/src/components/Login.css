@@ -1,11 +1,10 @@
 .login h1 { 	
-    padding-top: 50px;	
+    padding: 15% 50px 50px 50px;	
     text-align: center;	
 }
   
 .login-form {	
     display: flex;	
-    height: 50vh;	
     justify-content: center;	
     align-items: center;	
   }
