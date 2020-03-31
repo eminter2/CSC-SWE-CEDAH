@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import {Form, Button, Spinner} from 'react-bootstrap';
-import Header from './Header';
 import {withRouter, Redirect} from 'react-router-dom';
+
+import Header from './Header';
+import './Login.css';
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -114,7 +116,13 @@ const Login = () => {
                 <Header/>
                 <h1>Login / SignUP</h1>
                 <div className="login-form">
-                    <Form onSubmit={handleSubmit}>
+                    <Form 
+                        style={{
+                            width: '30%',
+                            maxWidth: 500,
+                            minWidth: 250
+                        }}
+                        onSubmit={handleSubmit}>
                         <Form.Label 
                         style={
                             { color: 'red', 
