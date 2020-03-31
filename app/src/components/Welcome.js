@@ -1,6 +1,6 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import {Jumbotron, Button} from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
 import './Welcome.css';
 import Header from './Header';
 
@@ -11,14 +11,41 @@ const Welcome = () => {
           <Header />:
           <Header isAuthenticated={true}/>
         }
-        <Jumbotron>
-          <h1>Welcome to MeetUP!</h1>
-          <p>
-            This is our way of simplifying collaboration.
-            Let AI do the work. We want to give you your time back.
-          </p>
-            <Button variant="primary" size="lg">Learn more</Button>
-        </Jumbotron>
+        <section className="section 1" href="#about" >
+          <h1>About things</h1>
+        </section>
+
+        <section className="section 2" href="#about">
+          <h1>About things</h1>
+        </section>
+        <section className="section 3" href="#">
+        <h1>About things</h1>
+
+
+        </section>
+
+        <section className="section 4">
+        <h1>About things</h1>
+
+        </section>
+
+        <section className="footer">
+          <div className="links">
+              <p>Something</p>
+              <p>Somethin2</p>
+              <p>Something3</p>
+          </div>
+          <div className="certs">
+              <p>Something</p>
+              <p>Somethin2</p>
+              <p>Something3</p>
+          </div>
+          <div className="space">
+              <p>Something</p>
+              <p>Somethin2</p>
+              <p>Something3</p>
+          </div>
+        </section>
       </div>
     );
 }
