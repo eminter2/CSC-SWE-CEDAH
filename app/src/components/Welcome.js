@@ -23,21 +23,30 @@ const Welcome = () => {
 
 
         <Container fluid className="footer">
-          <Row md={4}>
+          <Row>
             <Col>
               <h1>Branding</h1>
             </Col>
             <Col>
               <p>Something</p>
-              <p>Something2</p>
-              <p>Something3</p>
+              <p>Something</p>
+              <p>Something</p>
+              <p>Something</p>
+              <p>Something</p>
+              <p>Something</p>
             </Col>
             <Col>
               <p>Something</p>
               <p>Something</p>
               <p>Something</p>
+              <p>Something</p>
+              <p>Something</p>
+              <p>Something</p>
             </Col>
             <Col>
+              <p>Something</p>
+              <p>Something</p>
+              <p>Something</p>
               <p>Something</p>
               <p>Something</p>
               <p>Something</p>
