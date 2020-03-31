@@ -5,6 +5,7 @@ import {Nav, Navbar, NavDropdown, Button} from 'react-bootstrap';
 const Header = (props) => {
     const [loginRedirect, setLoginRedirect] = useState(false);
     const [homeRedirect, setHomeRedirect] = useState(false);
+    const [dashboardRedirect, setdashboardRedirect] = useState(false);
 
     const login = () => {
         setLoginRedirect(true)
@@ -12,18 +13,21 @@ const Header = (props) => {
 
     const logout = () => {
         localStorage.removeItem("token")
-        homeRedirect(true)
+        setHomeRedirect(true)
+    }
+
+    const pushToDashboard = () => {
+        setdashboardRedirect(true)
     }
 
     //TODO: broken. If you hit login/logout on certain pages it'll break
     if (loginRedirect) return <Redirect push to="/login"/>
     else if (homeRedirect) return <Redirect to="/"/>
+    else if (dashboardRedirect) return <Redirect push to="/dashboard"/>
     else {
         return (
             <Navbar sticky="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand>
-                    <Nav.Link onClick={() => setHomeRedirect(true)}>MeetUP</Nav.Link>
-                </Navbar.Brand>
+                <Navbar.Brand onClick={() => setHomeRedirect(true)}>MeetUP</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
@@ -39,15 +43,19 @@ const Header = (props) => {
                     </Nav>
                     <Nav>
                     {props.isAuthenticated ? 
-                            <Button variant="primary" onClick={logout}>Logout</Button>
+                            <>
+                                <Button variant="success"
+                                        onClick={pushToDashboard}
+                                        style={{margin: '0px 10px'}}>Dashboard</Button>
+                                <Button variant="primary" onClick={logout}>Logout</Button>
+                            </>
                             :
-                            <div>
-                                <Button 
-                                    variant="light" 
-                                    onClick={login}
-                                    style={{margin: '0px 10px'}}>Login</Button>
+                            <>
+                                <Button variant="light" 
+                                        onClick={login}
+                                        style={{margin: '0px 10px'}}>Login</Button>
                                 <Button variant="primary" onClick={login}>Sign Up</Button>
-                            </div>
+                            </>
                     }
                     </Nav>
                 </Navbar.Collapse>
