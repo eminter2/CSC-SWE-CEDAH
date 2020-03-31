@@ -112,7 +112,7 @@ const Login = () => {
 
     else {
         return (
-            <div className="login-page">
+            <div className="page login">
                 <Header/>
                 <h1>Login / SignUP</h1>
                 <div className="login-form">

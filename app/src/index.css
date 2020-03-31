@@ -1,17 +1,3 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 /* Hide scrollbar for chrome, opera, ff */
 body::-webkit-scrollbar, 
 #root::-webkit-scrollbar, 
@@ -23,4 +9,26 @@ html::-webkit-scrollbar,
 /* Hide scrollbar for IE and Edge */
 body, html, #root, .page {
   -ms-overflow-style: none;
+}
+
+#root {
+  background: white;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page {
+  background: white;
+  margin: auto;
+  height: 100vh;
+  width: 100%;
+  max-width: 2000px;
+  overflow-y: auto;
 }
