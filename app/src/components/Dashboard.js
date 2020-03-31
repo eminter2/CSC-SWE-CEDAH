@@ -3,7 +3,7 @@ import './Dashboard.css';
 import Header from './Header';
 import Meeting from './Meeting';
 import {withRouter} from 'react-router-dom';
-import {Container} from 'react-bootstrap';
+import {CardDeck, CardColumns} from 'react-bootstrap';
 
 const Dashboard = () => {
 
@@ -33,16 +33,17 @@ const Dashboard = () => {
     }
 
     if(!loading){
-        // console.log('fakeMeetingList', fakeMeetingList, 'Type: ', typeof(fakeMeetingList))
         const allMeetings = fakeMeetingList.map((meeting) => (<Meeting key={meeting.MeetingNo} meeting={meeting}/>))
 
         return (
-            <div className="dashboard">
+            <div className="page dashboard">
                 <Header isAuthenticated={true} />
                 <h1>Welcome to the Dashboard!</h1>
-                <Container>
-                    {allMeetings}
-                </Container>
+                <CardDeck style={{width: '80%', margin: 'auto'}}>
+                    <CardColumns>
+                        {allMeetings}
+                    </CardColumns>
+                </CardDeck>
             </div>
         )
     }
