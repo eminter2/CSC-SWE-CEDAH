@@ -4,7 +4,7 @@ import {Nav, Navbar, NavDropdown, Button} from 'react-bootstrap';
 
 const Header = (props) => {
     const [loginRedirect, setLoginRedirect] = useState(false);
-    const [logoutRedirect, setLogout] = useState(false);
+    const [homeRedirect, setHomeRedirect] = useState(false);
 
     const login = () => {
         setLoginRedirect(true)
@@ -12,17 +12,17 @@ const Header = (props) => {
 
     const logout = () => {
         localStorage.removeItem("token")
-        setLogout(true)
+        homeRedirect(true)
     }
 
     //TODO: broken. If you hit login/logout on certain pages it'll break
     if (loginRedirect) return <Redirect push to="/login"/>
-    else if (logoutRedirect) return <Redirect to="/"/>
+    else if (homeRedirect) return <Redirect to="/"/>
     else {
         return (
             <Navbar sticky="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Navbar.Brand>
-                    <Nav.Link to="/">MeetUP</Nav.Link>
+                    <Nav.Link onClick={() => setHomeRedirect(true)}>MeetUP</Nav.Link>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
