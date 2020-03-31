@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Hide scrollbar for chrome, opera, ff */
+body::-webkit-scrollbar, 
+#root::-webkit-scrollbar, 
+html::-webkit-scrollbar,
+.page::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+body, html, #root, .page {
+  -ms-overflow-style: none;
+}
