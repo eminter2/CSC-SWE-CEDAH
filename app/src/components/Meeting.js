@@ -22,7 +22,7 @@ const Meeting = (props) => {
                 <Card.Text>
                     Some quick example text to build on the card title and make up the bulk of
                     the card's content.<br/><br/>
-                    Host: {props.meeting.Host}
+                    Host: {props.meeting.Host}<br/>
                     Start: {props.meeting.Start}<br/>
                     End: {props.meeting.End}<br/>
                 </Card.Text>
