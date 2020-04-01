@@ -1,58 +1,34 @@
-import React from 'react';
-import {Nav, Navbar, NavDropdown, Carousel} from 'react-bootstrap';
-import meeting1 from '../assets/meeting1.jpeg';
-import meeting2 from '../assets/meeting2.jpeg';
-import meeting3 from '../assets/meeting3.jpg';
+import React, {useState} from 'react';
+import {Redirect, withRouter} from 'react-router-dom';
+import {Nav, Navbar, NavDropdown, Button} from 'react-bootstrap';
 
+const Header = (props) => {
+    const [loginRedirect, setLoginRedirect] = useState(false);
+    const [logoutRedirect, setLogoutRedirect] = useState(false);
+    const [homeRedirect, setHomeRedirect] = useState(false);
+    const [dashboardRedirect, setdashboardRedirect] = useState(false);
 
-const Header = () => {
+    const login = () => {
+        setLoginRedirect(true)
+    }
 
-    return (
-        <div className="header">
-            <Carousel style={{height: 400, background: 'black'} } controls={false} indicators={false}>
-                <Carousel.Item>
-                    <img
-                    className="d-block w-100"
-                    src={meeting1}
-                    alt="First slide"
-                    style={{
-                        height: 400,
-                        minWidth: 660,
-                        maxWidth: 2000,
-                        margin: 'auto'
-                    }}
-                    />                
-                </Carousel.Item>
-                <Carousel.Item>
-                    <img
-                    className="d-block w-100"
-                    src={meeting2}
-                    alt="Third slide"
-                    style={{
-                        height: 400,
-                        minWidth: 660,
-                        maxWidth: 2000,
-                        margin: 'auto'
-                    }}
-                    />
-                </Carousel.Item>
-                <Carousel.Item>
-                    <img
-                    className="d-block w-100"
-                    src={meeting3}
-                    alt="Third slide"
-                    style={{
-                        height: 400,
-                        minWidth: 660,
-                        maxWidth: 2000,
-                        margin: 'auto'
-                    }}
-                    />
-                </Carousel.Item>
-                </Carousel>
-                
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="#home">MeetUP</Navbar.Brand>
+    const logout = () => {
+        setLogoutRedirect(true)
+    }
+
+    const pushToDashboard = () => {
+        setdashboardRedirect(true)
+    }
+
+    //TODO: broken. If you hit login/logout on certain pages it'll break
+    if (loginRedirect) return <Redirect push to="/login"/>
+    else if (logoutRedirect) return <Redirect push to="/logout"/>
+    else if (homeRedirect) return <Redirect push to="/"/>
+    else if (dashboardRedirect) return <Redirect push to="/dashboard"/>
+    else {
+        return (
+            <Navbar sticky="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
+                <Navbar.Brand onClick={() => setHomeRedirect(true)}>MeetUP</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
@@ -67,14 +43,26 @@ const Header = () => {
                     </NavDropdown>
                     </Nav>
                     <Nav>
-                        <Nav.Link href="#login">Login</Nav.Link>
-                        <Nav.Link href="#signup">SignUP</Nav.Link>
+                    {props.isAuthenticated ? 
+                            <>
+                                <Button variant="success"
+                                        onClick={pushToDashboard}
+                                        style={{margin: '0px 10px'}}>Dashboard</Button>
+                                <Button variant="primary" onClick={logout}>Logout</Button>
+                            </>
+                            :
+                            <>
+                                <Button variant="light" 
+                                        onClick={login}
+                                        style={{margin: '0px 10px'}}>Login</Button>
+                                <Button variant="primary" onClick={login}>Sign Up</Button>
+                            </>
+                    }
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-        </div>
-    )
-
+        );
+    }
 }
 
-export default Header;
+export default withRouter(Header);
