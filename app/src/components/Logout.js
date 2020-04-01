@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {Redirect} from 'react-router-dom';
 import Header from './Header';
+import {Spinner} from 'react-bootstrap';
 import './Logout.css';
 
 
@@ -11,7 +12,7 @@ const Logout = () => {
     useEffect(() => {
         setTimeout(() => {
             logoutAndReturnHome()
-        }, 6000);
+        }, 3500);
     })
 
     const logoutAndReturnHome = () => {
@@ -28,6 +29,7 @@ const Logout = () => {
                     <div className="goodbye">
                         <h1>Come back soon!</h1>
                         <p>You are logged out.</p>
+                        <Spinner animation="border" size="lg"/>
                     </div>
                 </div>
             </>
