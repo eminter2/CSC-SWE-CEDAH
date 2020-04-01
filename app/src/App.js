@@ -2,6 +2,7 @@ import React from 'react';
 import Welcome from './components/Welcome';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import Logout from './components/Logout';
 import history from './history';
 import {Router, Route, Switch, Redirect} from 'react-router-dom';
 
@@ -20,6 +21,7 @@ const App = () => {
           getSession() ? (
             <Dashboard/> ) : <Redirect push to="/login"/>
         )}/>
+        <Route path='/logout' exact={true} component={Logout} />
       </Switch>
     </Router>
   )

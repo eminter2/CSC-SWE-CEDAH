@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {Redirect} from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 import {Nav, Navbar, NavDropdown, Button} from 'react-bootstrap';
 
 const Header = (props) => {
     const [loginRedirect, setLoginRedirect] = useState(false);
+    const [logoutRedirect, setLogoutRedirect] = useState(false);
     const [homeRedirect, setHomeRedirect] = useState(false);
     const [dashboardRedirect, setdashboardRedirect] = useState(false);
 
@@ -12,8 +13,7 @@ const Header = (props) => {
     }
 
     const logout = () => {
-        localStorage.removeItem("token")
-        setHomeRedirect(true)
+        setLogoutRedirect(true)
     }
 
     const pushToDashboard = () => {
@@ -22,6 +22,7 @@ const Header = (props) => {
 
     //TODO: broken. If you hit login/logout on certain pages it'll break
     if (loginRedirect) return <Redirect push to="/login"/>
+    else if (logoutRedirect) return <Redirect push to="/logout"/>
     else if (homeRedirect) return <Redirect push to="/"/>
     else if (dashboardRedirect) return <Redirect push to="/dashboard"/>
     else {
@@ -64,4 +65,4 @@ const Header = (props) => {
     }
 }
 
-export default Header;
+export default withRouter(Header);
