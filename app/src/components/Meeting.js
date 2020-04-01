@@ -1,6 +1,7 @@
 import React from 'react';
-import {Card, Button} from 'react-bootstrap';
+import {Card, Button, ButtonGroup} from 'react-bootstrap';
 import icon from '../assets/business.svg';
+import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 
 const Meeting = (props) => {
 
@@ -25,7 +26,12 @@ const Meeting = (props) => {
                     Start: {props.meeting.Start}<br/>
                     End: {props.meeting.End}<br/>
                 </Card.Text>
-                <Button variant="primary">Join Meeting</Button>
+                <ButtonGroup style={{width: '100%'}}>
+                    <Button variant="light" style={{width: '80%'}}>Join Meeting</Button>
+                    <Button variant="info" style={{width: '20%', padding: '10px'}}>
+                        <SettingsRoundedIcon />
+                    </Button>
+                </ButtonGroup>
             </Card.Body>
         </Card>
     )
