@@ -108,7 +108,7 @@ const Login = () => {
 
     }
 
-    if(redirect) return <Redirect push to='/dashboard'/>
+    if(redirect) return <Redirect push to={{pathname: '/dashboard', state: { user: formUser} }}/>
 
     else {
         return (
