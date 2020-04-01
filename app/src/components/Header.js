@@ -22,7 +22,7 @@ const Header = (props) => {
 
     //TODO: broken. If you hit login/logout on certain pages it'll break
     if (loginRedirect) return <Redirect push to="/login"/>
-    else if (homeRedirect) return <Redirect to="/"/>
+    else if (homeRedirect) return <Redirect push to="/"/>
     else if (dashboardRedirect) return <Redirect push to="/dashboard"/>
     else {
         return (

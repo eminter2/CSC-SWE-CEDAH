@@ -18,7 +18,7 @@ const App = () => {
         <Route path='/login' exact={true} component={Login}/>
         <Route path='/dashboard' exact={true} render={() => (
           getSession() ? (
-            <Dashboard/> ) : <Redirect to="/login"/>
+            <Dashboard/> ) : <Redirect push to="/login"/>
         )}/>
       </Switch>
     </Router>
