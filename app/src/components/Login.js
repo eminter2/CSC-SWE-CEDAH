@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Form, Button, Spinner} from 'react-bootstrap';
+import {Form, Button, Spinner, Nav} from 'react-bootstrap';
 import {withRouter, Redirect} from 'react-router-dom';
 
 import Header from './Header';
@@ -117,7 +117,7 @@ const Login = () => {
                     <Header />:
                     <Header isAuthenticated={true}/>
                 }
-                <h1>Login / SignUP</h1>
+                <h1>Login</h1>
                 <div className="login-form">
                     <Form 
                         style={{
@@ -151,9 +151,6 @@ const Login = () => {
                                 onChange={e => setPassword(e.target.value)}/>
                         </Form.Group>
 
-                        <Form.Group controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="I'm a New User" onChange={e => setChecked(!checked)}/>
-                        </Form.Group>
                         {isLoading ?
                             <Button variant="primary" type="submit"> 
                                 <Spinner
@@ -170,6 +167,10 @@ const Login = () => {
                             <Button variant="primary" type="submit">Submit</Button>
                         }
                     </Form>
+                    <p style={{padding: 30}}>
+                        Don't have an account?
+                        <Nav.Link to="/signup" bsPrefix="mylink" style={{marginLeft: 10}}>Sign up</Nav.Link>
+                    </p>
                 </div>
             </div>
         )

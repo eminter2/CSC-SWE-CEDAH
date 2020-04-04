@@ -4,12 +4,17 @@ import {Nav, Navbar, NavDropdown, Button} from 'react-bootstrap';
 
 const Header = (props) => {
     const [loginRedirect, setLoginRedirect] = useState(false);
+    const [signupRedirect, setSignupRedirect] = useState(false);
     const [logoutRedirect, setLogoutRedirect] = useState(false);
     const [homeRedirect, setHomeRedirect] = useState(false);
     const [dashboardRedirect, setdashboardRedirect] = useState(false);
 
     const login = () => {
         setLoginRedirect(true)
+    }
+
+    const signup = () => {
+        setSignupRedirect(true)
     }
 
     const logout = () => {
@@ -22,6 +27,7 @@ const Header = (props) => {
 
     //TODO: broken. If you hit login/logout on certain pages it'll break
     if (loginRedirect) return <Redirect push to="/login"/>
+    else if (signupRedirect) return <Redirect push to="/signup"/>
     else if (logoutRedirect) return <Redirect push to="/logout"/>
     else if (homeRedirect) return <Redirect push to="/"/>
     else if (dashboardRedirect) return <Redirect push to="/dashboard"/>
@@ -55,7 +61,7 @@ const Header = (props) => {
                                 <Button variant="light" 
                                         onClick={login}
                                         style={{margin: '0px 10px'}}>Login</Button>
-                                <Button variant="primary" onClick={login}>Sign Up</Button>
+                                <Button variant="primary" onClick={signup}>Sign Up</Button>
                             </>
                     }
                     </Nav>

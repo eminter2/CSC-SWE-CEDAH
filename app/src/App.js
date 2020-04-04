@@ -1,6 +1,7 @@
 import React from 'react';
 import Welcome from './components/Welcome';
 import Login from './components/Login';
+import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Logout from './components/Logout';
 import history from './history';
@@ -17,6 +18,7 @@ const App = () => {
       <Switch>
         <Route path='/' exact={true} component={Welcome}/>
         <Route path='/login' exact={true} component={Login}/>
+        <Route path='/signup' exact={true} component={Signup}/>
         <Route path='/dashboard' exact={true} render={() => (
           getSession() ? (
             <Dashboard/> ) : <Redirect push to="/login"/>
