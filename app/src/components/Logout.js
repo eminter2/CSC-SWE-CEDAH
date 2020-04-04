@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {Redirect} from 'react-router-dom';
-import Header from './Header';
 import {Spinner} from 'react-bootstrap';
 import './Logout.css';
 
@@ -25,7 +24,6 @@ const Logout = () => {
         return (
             <>
                 <div className="page logout">
-                    <Header/>
                     <div className="goodbye">
                         <h1>Come back soon!</h1>
                         <p>You are logged out.</p>
