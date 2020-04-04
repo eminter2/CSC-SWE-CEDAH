@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-import {Form, Button, Spinner, Nav} from 'react-bootstrap';
-import {withRouter, Redirect} from 'react-router-dom';
-
-import Header from './Header';
+import {Form, Button, Spinner} from 'react-bootstrap';
+import {withRouter, Redirect, NavLink} from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
@@ -113,10 +111,6 @@ const Login = () => {
     else {
         return (
             <div className="page login">
-                {!localStorage.token ? 
-                    <Header />:
-                    <Header isAuthenticated={true}/>
-                }
                 <h1>Login</h1>
                 <div className="login-form">
                     <Form 
@@ -169,7 +163,7 @@ const Login = () => {
                     </Form>
                     <p style={{padding: 30}}>
                         Don't have an account?
-                        <Nav.Link to="/signup" bsPrefix="mylink" style={{marginLeft: 10}}>Sign up</Nav.Link>
+                        <NavLink to="/signup" style={{marginLeft: 10}}>Sign up</NavLink>
                     </p>
                 </div>
             </div>
