@@ -25,8 +25,21 @@ public class UserController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@RequestBody ApplicationUser user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        applicationUserRepository.save(user);
-        return ResponseEntity.ok().body(user);
+        ApplicationUser existing;
+        try{
+            existing = applicationUserRepository.findByEmail(user.getEmail());
+        } catch (Exception e){
+            System.out.println("Exception locating user");
+            return ResponseEntity.status(500).build();
+        }
+        if(existing == null){
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            applicationUserRepository.save(user);
+            return ResponseEntity.ok().body(user);
+        }
+        else{
+            return ResponseEntity.status(403).body("An account with this email already exists");
+        }
+        
     }
 }
