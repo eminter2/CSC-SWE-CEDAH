@@ -1,25 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {logOut} from '../redux/actions/actions';
 import {Redirect} from 'react-router-dom';
 import {Spinner} from 'react-bootstrap';
 import './Logout.css';
 
 
-const Logout = () => {
-
-    const [redirect, setRedirect] = useState(false)
+const Logout = (props) => {
 
     useEffect(() => {
         setTimeout(() => {
-            logoutAndReturnHome()
-        }, 1000);
+            props.logOut()
+        }, 2000);
     })
-
-    const logoutAndReturnHome = () => {
-        localStorage.removeItem("token");
-        setRedirect(true)
-    }
     
-    if(redirect) return <Redirect push to="/"/>
+    if(!props.isAuthenticated) return <Redirect push to="/"/>
     else {
         return (
             <>
@@ -36,4 +31,12 @@ const Logout = () => {
     }
 }
 
-export default Logout;
+const mapDispatchToProps = dispatch => ({
+    logOut: () => dispatch(logOut())
+})
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.reducer.isAuthenticated
+  })
+
+export default connect(mapStateToProps, mapDispatchToProps)(Logout);

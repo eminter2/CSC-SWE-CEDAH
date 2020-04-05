@@ -9,7 +9,6 @@ const Userform = (props) => {
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
     const [message, setMessage] = useState("");
-    const [loading, setLoading] = useState(false);
 
 
     let formData = {
@@ -21,7 +20,6 @@ const Userform = (props) => {
     }
 
     const validateAndSubmit = (e) => {
-        setLoading(true)
         e.preventDefault();
         if(password !== password2){
             setMessage("Passwords do not match")

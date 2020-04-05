@@ -12,5 +12,5 @@ module.exports = app => {
     //         }
     //     })
     // );
-    app.use(morgan('combined'));
+    // app.use(morgan('combined'));
 };

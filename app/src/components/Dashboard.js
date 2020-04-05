@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import './Dashboard.css';
 import Meeting from './Meeting';
-import {withRouter} from 'react-router-dom';
 import {CardDeck, CardColumns} from 'react-bootstrap';
 
 const Dashboard = (props) => {
 
     const [loading, setLoading] = useState(true)
     const [fakeMeetingList, setfakeMeetingList] = useState()
-    console.log(props.location.state)
 
     useEffect(() => {
         createMeetings();
@@ -53,4 +51,4 @@ const Dashboard = (props) => {
     }
 }
 
-export default withRouter(Dashboard);
+export default Dashboard;

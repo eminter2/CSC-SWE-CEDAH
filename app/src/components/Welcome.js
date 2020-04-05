@@ -1,5 +1,4 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 import {Container, Row, Col} from 'react-bootstrap';
 import './Welcome.css';
 
@@ -51,4 +50,4 @@ const Welcome = () => {
     );
 }
 
-export default withRouter(Welcome);
+export default Welcome;

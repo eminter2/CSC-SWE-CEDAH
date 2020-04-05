@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
-import {withRouter, Redirect, NavLink} from 'react-router-dom';
 import Userform from './Userform';
 import './Login.css';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
+import {userLoginFetch} from '../redux/actions/actions';
+import {Redirect, NavLink} from 'react-router-dom';
 
-const Login = () => {
-    const [message, setMessage] = useState("");
+const Login = (props) => {
+
     const [isLoading, setLoading] = useState(false);
-    const [redirect, setRedirect] = useState(false);
 
     const handleSubmit = (event, formData) => {
         event.preventDefault();
@@ -15,51 +16,18 @@ const Login = () => {
             username: formData.username, 
             password: formData.password
         }
-        console.log('Form user', formUser)
-        console.log('Form json', JSON.stringify(formUser))
-
-        //Login existing user
-        let url = '/login'
-        fetch(url , {
-            method: 'POST',
-            cache: 'no-cache',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formUser)
-        })
-        .then((response) => {
-            console.log(response)
-            let authHeader = response.headers.get("Authorization")
-            setLoading(false)
-            if(authHeader === null){
-                setMessage("Username or Password are incorrect")
-                setTimeout(() => {
-                    setMessage("")
-                }, 3000);
-            }
-            else{
-                console.log("Success")
-                let token = authHeader.split("Bearer ")[1]
-                localStorage.setItem("token", token)
-                setRedirect(true)    
-            } 
-        })
-        .catch((error) => {
-            console.log('Request Failed: ', error)
-        })
+        props.userLoginFetch(formUser)
         setLoading(false);
     }
 
-    if(redirect) return <Redirect push exact to="/dashboard"/>
+    if(props.isAuthenticated) return <Redirect push exact to="/dashboard"/>
 
     else {
         return (
             <div className="page login">
                 <h1>Login</h1>
                 <div className="login-form">
-                    <p style={{color: 'red'}}>{message}</p>
+                    <p style={{color: 'red'}}>{props.loginError}</p>
                     <Userform isLoading={isLoading} handleSubmit={handleSubmit}/>                    
                     <p style={{padding: 30}}>
                         Don't have an account?
@@ -71,4 +39,13 @@ const Login = () => {
     }
 }
 
-export default withRouter(Login);
+const mapStateToProps = state => ({
+    loginError: state.reducer.loginError,
+    isAuthenticated: state.reducer.isAuthenticated
+})
+
+const mapDispatchToProps = dispatch => ({
+    userLoginFetch: formUser => dispatch(userLoginFetch(formUser))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
