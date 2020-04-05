@@ -73,10 +73,11 @@ const App = () => {
         <Route href="" path="/" exact component={Welcome}/>
         <Route href="" path="/login" exact component={Login}/>
         <Route href="" path="/signup" exact component={Signup}/>
-        <Route href="" path="/dashboard" exact render={() => (
+        <Route href="" path="/dashboard" exact component={Dashboard}/>
+        {/* <Route href="" path="/dashboard" exact render={() => (
           hasToken ? (
             <Dashboard/> ) : <Redirect push to="/login"/>
-        )}/>
+        )}/> */}
         <Route href="" path="/logout" exact component={Logout} />
       </div>
     </Router>
