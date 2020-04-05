@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meetup.meetupapi.model.ApplicationUser;
 
+import org.json.simple.JSONObject;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,7 +29,7 @@ import static com.meetup.meetupapi.security.SecurityConstants.TOKEN_PREFIX;
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager){
         this.authenticationManager = authenticationManager;
     }
 
@@ -51,15 +52,44 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest req,
-                                            HttpServletResponse res,
-                                            FilterChain chain,
-                                            Authentication auth) throws IOException, ServletException {
+    protected void successfulAuthentication(
+            HttpServletRequest req,
+            HttpServletResponse res,
+            FilterChain chain,
+            Authentication auth
+            ) throws IOException, ServletException 
+    {
+        String username = ((User) auth.getPrincipal()).getUsername();
+        JSONObject data = new JSONObject();
+        data.put("user", username);
+        String json = new ObjectMapper().writeValueAsString(data);
 
         String token = JWT.create()
-                .withSubject(((User) auth.getPrincipal()).getUsername())
+                .withSubject(username)
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(SECRET.getBytes()));
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
+        res.getWriter().write(json);
+        res.getWriter().flush();
+        res.getWriter().close();
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(
+            HttpServletRequest req, 
+            HttpServletResponse res, 
+            AuthenticationException e) throws IOException, ServletException
+    {
+        // System.out.println("\n\n\n\n=======\nInvalid Credentials=========\n\n\n\n");
+        JSONObject data = new JSONObject();
+        data.put("message", "Invalid Credentials");
+        String json = new ObjectMapper().writeValueAsString(data);
+        res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
+        res.getWriter().write(json);
+        res.getWriter().flush();
+        res.getWriter().close();
     }
 }
