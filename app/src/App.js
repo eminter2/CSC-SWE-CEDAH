@@ -24,7 +24,8 @@ const App = () => {
   })
 
   return (
-    <Router>
+    // <Router basename="/api">
+     <Router> 
       <div className="App">
         <Navbar 
           sticky="top" 
@@ -69,14 +70,14 @@ const App = () => {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <Route path="/" exact component={Welcome}/>
-        <Route path="/login" exact component={Login}/>
-        <Route path="/signup" exact component={Signup}/>
-        <Route path="/dashboard" exact render={() => (
+        <Route href="" path="/" exact component={Welcome}/>
+        <Route href="" path="/login" exact component={Login}/>
+        <Route href="" path="/signup" exact component={Signup}/>
+        <Route href="" path="/dashboard" exact render={() => (
           hasToken ? (
             <Dashboard/> ) : <Redirect push to="/login"/>
         )}/>
-        <Route path="/logout" exact component={Logout} />
+        <Route href="" path="/logout" exact component={Logout} />
       </div>
     </Router>
   )

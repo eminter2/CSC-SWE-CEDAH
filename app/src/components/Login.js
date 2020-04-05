@@ -1,39 +1,36 @@
 import React, {useState} from 'react';
-import {Form, Button, Spinner} from 'react-bootstrap';
 import {withRouter, Redirect, NavLink} from 'react-router-dom';
 import Userform from './Userform';
 import './Login.css';
 
 const Login = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const [isLoading, setLoading] = useState(false);
     const [redirect, setRedirect] = useState(false);
 
-    let formUser = {
-        username: username,
-        password: password
-    }
-
     const handleSubmit = (event, formData) => {
         event.preventDefault();
         setLoading(true);
+        let formUser = {
+            username: formData.username, 
+            password: formData.password
+        }
+        console.log('Form user', formUser)
+        console.log('Form json', JSON.stringify(formUser))
 
         //Login existing user
         let url = '/login'
-        console.log('Fetching with username: ', formData.username)
         fetch(url , {
             method: 'POST',
             cache: 'no-cache',
-            credentials: 'same-origin',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(formUser)
         })
         .then((response) => {
+            console.log(response)
             let authHeader = response.headers.get("Authorization")
             setLoading(false)
             if(authHeader === null){
@@ -43,6 +40,7 @@ const Login = () => {
                 }, 3000);
             }
             else{
+                console.log("Success")
                 let token = authHeader.split("Bearer ")[1]
                 localStorage.setItem("token", token)
                 setRedirect(true)    
@@ -51,15 +49,17 @@ const Login = () => {
         .catch((error) => {
             console.log('Request Failed: ', error)
         })
+        setLoading(false);
     }
 
-    if(redirect) return <Redirect push to={{pathname: '/dashboard' }}/>
+    if(redirect) return <Redirect push exact to="/dashboard"/>
 
     else {
         return (
             <div className="page login">
                 <h1>Login</h1>
                 <div className="login-form">
+                    <p style={{color: 'red'}}>{message}</p>
                     <Userform isLoading={isLoading} handleSubmit={handleSubmit}/>                    
                     <p style={{padding: 30}}>
                         Don't have an account?

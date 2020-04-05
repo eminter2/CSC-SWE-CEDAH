@@ -11,7 +11,7 @@ const Logout = () => {
     useEffect(() => {
         setTimeout(() => {
             logoutAndReturnHome()
-        }, 3500);
+        }, 1000);
     })
 
     const logoutAndReturnHome = () => {
