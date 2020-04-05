@@ -22,9 +22,7 @@ import java.util.Date;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 import static com.meetup.meetupapi.security.SecurityConstants.EXPIRATION_TIME;
-import static com.meetup.meetupapi.security.SecurityConstants.HEADER_STRING;
 import static com.meetup.meetupapi.security.SecurityConstants.SECRET;
-import static com.meetup.meetupapi.security.SecurityConstants.TOKEN_PREFIX;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
@@ -60,15 +58,16 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             ) throws IOException, ServletException 
     {
         String username = ((User) auth.getPrincipal()).getUsername();
-        JSONObject data = new JSONObject();
-        data.put("user", username);
-        String json = new ObjectMapper().writeValueAsString(data);
-
         String token = JWT.create()
                 .withSubject(username)
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(SECRET.getBytes()));
-        res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+
+        JSONObject data = new JSONObject();
+        data.put("user", username);
+        data.put("jwt", token);
+        String json = new ObjectMapper().writeValueAsString(data);
+        // res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
         res.getWriter().write(json);
