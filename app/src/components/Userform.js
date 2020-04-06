@@ -37,7 +37,8 @@ const Userform = (props) => {
                     maxWidth: 500,
                     minWidth: 250
                 }}
-                onSubmit={e => validateAndSubmit(e)}>
+                onSubmit={e => validateAndSubmit(e)}
+                validated>
                 <Form.Label 
                 style={
                     { color: 'red', 
@@ -62,13 +63,14 @@ const Userform = (props) => {
                         required
                         />
                 </Form.Group>
-                <Form.Group controlId="phone">
+                <Form.Group controlId="tel">
                     <Form.Label>Phone</Form.Label>
                     <Form.Control 
-                        type="phone" 
+                        type="tel" 
                         value={phone}
                         onChange={e => setPhone(e.target.value)}
                         required
+                        maxLength={10}
                         />
                 </Form.Group>
                 <Form.Group controlId="username">
