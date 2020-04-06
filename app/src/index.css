@@ -7,7 +7,6 @@ html::-webkit-scrollbar,
 }
 
 body, html, #root {
-  overflow: hidden;
 }
 
 /* Hide scrollbar for IE and Edge */
@@ -34,5 +33,4 @@ body {
   height: 100vh;
   width: 100%;
   max-width: 2000px;
-  overflow-y: auto;
 }

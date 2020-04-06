@@ -1,17 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import './Dashboard.css';
-import Header from './Header';
 import Meeting from './Meeting';
-import {withRouter} from 'react-router-dom';
 import {CardDeck, CardColumns} from 'react-bootstrap';
 
 const Dashboard = (props) => {
 
     const [loading, setLoading] = useState(true)
     const [fakeMeetingList, setfakeMeetingList] = useState()
-    console.log(props.location.state)
-
-    let user = props.location.state.user.username
 
     useEffect(() => {
         createMeetings();
@@ -40,8 +35,7 @@ const Dashboard = (props) => {
 
         return (
             <div className="page dashboard">
-                <Header isAuthenticated={true} />
-                <h1>Welcome to your Dashboard, {user}!</h1>
+                <h1>Welcome to the Dashboard!</h1>
                 <CardDeck style={{width: '80%', margin: 'auto'}}>
                     <CardColumns>
                         {allMeetings}
@@ -57,4 +51,4 @@ const Dashboard = (props) => {
     }
 }
 
-export default withRouter(Dashboard);
+export default Dashboard;
