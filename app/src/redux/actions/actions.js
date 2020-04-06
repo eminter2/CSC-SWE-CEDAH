@@ -15,9 +15,9 @@ export const userLoginFetch = user => {
         .then(data => {
             if(data.message){
                 console.log("Could not login: ", data.message)
-                dispatch(loginFail(data.message))
+                dispatch(loginError(data.message))
                 setTimeout(() => {
-                    dispatch(loginFail(null))
+                    dispatch(loginError(null))
                 }, 3000);
             }
             else {
@@ -29,6 +29,12 @@ export const userLoginFetch = user => {
     }
 }
 
+export const logOut = () => {
+    console.log("actions.js | Logging out")
+    return dispatch => {
+        return dispatch(logoutUser())
+    }
+}
 
 export const checkIfFamiliar = () => {
     console.log("Checking for token")
@@ -40,20 +46,49 @@ export const checkIfFamiliar = () => {
     }
 }
 
-export const logOut = () => {
-    console.log("actions.js | Logging out")
+export const registerUser = (formData) => {
+    console.log("Attempting registration");
     return dispatch => {
-        return dispatch(logoutUser())
+        return fetch('/users/sign-up', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.message){
+                dispatch(registrationError(data.message))
+                setTimeout(() => {
+                    dispatch(registrationError(null))
+                }, 3000);
+            }
+            else{
+                dispatch(registrationSuccess(true))
+            }
+        })
     }
 }
+
+const registrationError = message => ({
+    type: 'REGISTRATION_ERROR',
+    payload: message
+})
+
+const registrationSuccess = status => ({
+    type: 'REGISTRATION_SUCCESS',
+    payload: status
+})
 
 const loginUser = (userObj, bool) => ({
     type: 'LOGIN_USER',
     payload: { user: userObj, isAuthenticated: bool }
 })
 
-const loginFail = message => ({
-    type: 'LOGIN_FAIL',
+const loginError = message => ({
+    type: 'LOGIN_ERROR',
     payload: message
 })
 

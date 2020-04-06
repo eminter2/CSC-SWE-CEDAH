@@ -1,48 +1,30 @@
 import React, {useState} from 'react';
-import {withRouter, NavLink, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {registerUser} from '../redux/actions/actions';
+import {NavLink, Redirect} from 'react-router-dom';
 import Userform from './Userform';
 
 import './Signup.css';
 
-const Signup = () => {
+const Signup = (props) => {
 
     const [isLoading, setLoading] = useState(false);
-    const [message, setMessage] = useState("");
-    const [redirect, setRedirect] = useState(false);
 
     const handleSubmit = async (e, formData) => {
         e.preventDefault()
         setLoading(true);
         console.log("Form data: ", formData)
-
-        //Register new user
-        let url = '/users/sign-up'
-        let response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-        if(response.ok){
-            setRedirect(true)
-        }
-        else{
-            let responseText = await response.text()
-            console.log('Response text: ', responseText)
-            setMessage(responseText);
-        }
-        setLoading(false)
+        props.registerUser(formData) 
+        setLoading(false);       
     }
 
-    if(redirect) return <Redirect to="/login" exact push/>
+    if(props.registrationSuccess) return <Redirect to="/login" exact push/>
     else{
         return (
             <div className="page signup">
                 <h1>Sign up!</h1>
                 <div className="login-form">
-                    <p style={{color: 'red'}}>{message}</p>
+                    <p style={{color: 'red'}}>{props.registrationError}</p>
                     <Userform 
                         signup
                         isLoading={isLoading}
@@ -57,4 +39,13 @@ const Signup = () => {
     }
 }
 
-export default withRouter(Signup);
+const mapStateToProps = state => ({
+    registrationError: state.reducer.registrationError,
+    registrationSuccess: state.reducer.registrationSuccess
+})
+
+const mapDispatchToProps = dispatch => ({
+    registerUser: formData => dispatch(registerUser(formData))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
