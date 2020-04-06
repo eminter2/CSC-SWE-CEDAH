@@ -28,6 +28,7 @@ public class UserController {
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@RequestBody ApplicationUser user) {
         JSONObject data = new JSONObject();
+        JSONObject inner = new JSONObject();
         ApplicationUser existingUser, existingEmail;
 
         try{
@@ -39,8 +40,13 @@ public class UserController {
         }
         if ( existingUser == null && existingEmail == null){
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            data.put("user", user);
             applicationUserRepository.save(user);
+            inner.put("id", user.getId());
+            inner.put("fullName", user.getFullName());
+            inner.put("email", user.getEmail());
+            inner.put("phone", user.getPhone());
+            inner.put("username", user.getUsername());
+            data.put("user", inner);
         }
         else{
             //If username & email exist
