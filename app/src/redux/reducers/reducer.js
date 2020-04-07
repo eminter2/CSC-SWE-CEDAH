@@ -1,5 +1,5 @@
 const initialState = {
-    currentUser: {},
+    currentUser: null,
     isAuthenticated: false,
     loginError: null,
     registrationSuccess: false,

@@ -1,5 +1,5 @@
 export const userLoginFetch = user => {
-    console.log("In the actions.js")
+    console.log("Logging in...")
     return async dispatch => {
         //Login existing user
         return fetch('/login' , {
@@ -23,8 +23,28 @@ export const userLoginFetch = user => {
             else {
                 console.log("Successful login. Token: ", data.jwt)
                 localStorage.setItem("token", data.jwt)
+                console.log("user: ", data.user)
                 dispatch(loginUser(data.user, true))
             }
+        })
+    }
+}
+
+export const getUserInfo = (username, token) => {
+    console.log('Getting user info')
+    return async dispatch => {
+        return fetch(`/users/profile?username=${username}`, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('getuserinfo response: ', data)
         })
     }
 }

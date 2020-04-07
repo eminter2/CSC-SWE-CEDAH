@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {getUserInfo} from '../redux/actions/actions';
 import Meeting from './Meeting';
 import {CardDeck, CardColumns} from 'react-bootstrap';
 
@@ -12,6 +14,10 @@ const Dashboard = (props) => {
     },[])
 
     const createMeetings = () => {
+        let username = "connor"
+        let token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb25ub3IiLCJleHAiOjE1ODcwOTQ5NDZ9.hsXHXza9ZI3maHieUsIzCNFniK7jlwBJk9H6wMy5FTDDXnP1vJt3hOe0i-0xv0FDeAuqcVv7zyedrq_xm7Q48A"
+        props.getUserInfo(username, token)
+        setLoading(false)
         let tempArray=[]
         setLoading(true)
         let count = 9;
@@ -27,6 +33,7 @@ const Dashboard = (props) => {
         }
         setfakeMeetingList(tempArray)
         setLoading(false)
+
     }
 
     if(!loading){
@@ -34,7 +41,7 @@ const Dashboard = (props) => {
 
         return (
             <div className="page dashboard">
-                <h1>Welcome to the Dashboard!</h1>
+                <h1>Welcome to the Dashboard, {}!</h1>
                 <CardDeck style={{width: '80%', margin: 'auto'}}>
                     <CardColumns>
                         {allMeetings}
@@ -50,4 +57,12 @@ const Dashboard = (props) => {
     }
 }
 
-export default Dashboard;
+const mapStateToProps = state => ({
+    currentUser: state.reducer.currentUser
+})
+
+const mapDispatchToProps = dispatch => ({
+    getUserInfo : (username, token) => dispatch(getUserInfo(username, token))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
