@@ -3,8 +3,6 @@ import {connect} from 'react-redux';
 import {logOut} from '../redux/actions/actions';
 import {Redirect} from 'react-router-dom';
 import {Spinner} from 'react-bootstrap';
-import './Logout.css';
-
 
 const Logout = (props) => {
 
