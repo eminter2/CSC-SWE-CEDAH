@@ -19,7 +19,6 @@ public class UserController {
     private ApplicationUserRepository applicationUserRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
     public UserController(ApplicationUserRepository applicationUserRepository,
                           BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.applicationUserRepository = applicationUserRepository;
@@ -29,12 +28,13 @@ public class UserController {
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@RequestBody ApplicationUser user) {
         JSONObject data = new JSONObject();
-        JSONObject inner = new JSONObject();
         ApplicationUser existingUser, existingEmail;
-
         try{
-            existingUser = applicationUserRepository.findByUsername(user.getUsername());
-            existingEmail = applicationUserRepository.findByEmail(user.getEmail());
+            existingUser = applicationUserRepository
+                            .findByUsername(user.getUsername());
+            existingEmail = applicationUserRepository
+                            .findByEmail(user.getEmail());
+
         } catch (Exception e){
             System.out.println("Exception locating user");
             return ResponseEntity.status(500).build();
@@ -42,23 +42,13 @@ public class UserController {
         if ( existingUser == null && existingEmail == null){
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             applicationUserRepository.save(user);
-            
-            // @TODO Use the buildUserJSON method  
-            inner.put("id", user.getId());
-            inner.put("fullName", user.getFullName());
-            inner.put("email", user.getEmail());
-            inner.put("phone", user.getPhone());
-            inner.put("username", user.getUsername());
-            data.put("user", inner);
+            data.put("user", buildUserJSON(user));
         }
         else{
-            //If username & email exist
             if(existingUser != null && existingEmail != null) data.put("message", 
                 "An account with this username and email already exists");
-            //If username is taken
             else if(existingUser != null) data.put("message",
                 "An account with this username already exists");
-            //If email is taken
             else if(existingEmail != null) data.put("message",
                 "An account with this email already exists");
         }        
@@ -67,21 +57,21 @@ public class UserController {
 
     @PostMapping("/profile")
     public ResponseEntity<?> getUser(@RequestParam("username") String username) {
-        JSONObject response = new JSONObject();
+        JSONObject data = new JSONObject();
         try {
             ApplicationUser existingUser = applicationUserRepository
                                             .findByUsername(username);
             if(existingUser == null){
-                response.put("message", "This user does not exist");
+                data.put("message", "This user does not exist");
             }
             else {
-                response.put("user", buildUserJSON(existingUser));
+                data.put("user", buildUserJSON(existingUser));
             }
         } catch (Exception e){
             return ResponseEntity.status(500).build();
         }
 
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(data);
     }
 
     public JSONObject buildUserJSON(ApplicationUser user){
