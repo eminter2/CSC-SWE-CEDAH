@@ -33,10 +33,7 @@ body {
 }
 
 .welcome {
-  h1 { 
-    margin: 100px auto;
-  }
-  
+ 
   .section {
     height: 700px;
     width: 90%;
@@ -68,5 +65,16 @@ body {
   .footer .col:not(:first-child) { 
     border-right: 1px solid black;
     text-align: right;
+  }
+}
+
+.signup {
+  h1 {
+    padding: 15% 50px 50px 50px;
+    text-align: center;
+  }
+  .btn {
+    display: block;
+    margin: 30px auto auto auto;
   }
 }

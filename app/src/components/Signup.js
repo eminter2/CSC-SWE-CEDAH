@@ -4,8 +4,6 @@ import {registerUser} from '../redux/actions/actions';
 import {NavLink, Redirect} from 'react-router-dom';
 import Userform from './Userform';
 
-import './Signup.css';
-
 const Signup = (props) => {
 
     const [isLoading, setLoading] = useState(false);
