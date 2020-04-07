@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import './Dashboard.css';
 import Meeting from './Meeting';
 import {CardDeck, CardColumns} from 'react-bootstrap';
 
