@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -41,6 +42,8 @@ public class UserController {
         if ( existingUser == null && existingEmail == null){
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             applicationUserRepository.save(user);
+            
+            // @TODO Use the buildUserJSON method  
             inner.put("id", user.getId());
             inner.put("fullName", user.getFullName());
             inner.put("email", user.getEmail());
@@ -60,5 +63,35 @@ public class UserController {
                 "An account with this email already exists");
         }        
         return ResponseEntity.ok().body(data);
+    }
+
+    @PostMapping("/profile")
+    public ResponseEntity<?> getUser(@RequestParam("username") String username) {
+        JSONObject response = new JSONObject();
+        try {
+            ApplicationUser existingUser = applicationUserRepository
+                                            .findByUsername(username);
+            if(existingUser == null){
+                response.put("message", "This user does not exist");
+            }
+            else {
+                response.put("user", buildUserJSON(existingUser));
+            }
+        } catch (Exception e){
+            return ResponseEntity.status(500).build();
+        }
+
+        return ResponseEntity.ok().body(response);
+    }
+
+    public JSONObject buildUserJSON(ApplicationUser user){
+        JSONObject data;
+        data = new JSONObject();
+        data.put("id", user.getId());
+        data.put("fullName", user.getFullName());
+        data.put("email", user.getEmail());
+        data.put("phone", user.getPhone());
+        data.put("username", user.getUsername());
+        return data;
     }
 }
