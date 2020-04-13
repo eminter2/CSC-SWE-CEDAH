@@ -21,7 +21,7 @@ const Signup = (props) => {
         return (
             <div className="page signup">
                 <h1>Sign up!</h1>
-                <div className="login-form">
+                <div className="user-form">
                     <p style={{color: 'red'}}>{props.registrationError}</p>
                     <Userform 
                         signup

@@ -44,6 +44,31 @@ export const getUserInfo = (username, token) => {
         })
         .then(response => response.json())
         .then(data => {
+            if(data.message){
+                console.log("Token expired. Log in again")
+            }
+            else {
+                console.log('getuserinfo response: ', data)
+                dispatch(loginUser(data.user, true))
+            }
+        })
+    }
+}
+
+export const getUserInfo = (username, token) => {
+    console.log('Getting user info')
+    return async dispatch => {
+        return fetch(`/users/profile?username=${username}`, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
             console.log('getuserinfo response: ', data)
         })
     }
@@ -60,6 +85,7 @@ export const checkIfFamiliar = () => {
     console.log("Checking for token")
     return dispatch => {
         if (localStorage.token){
+            console.log("found token")
             localStorage.removeItem("token")
             dispatch(loginUser(null, true))
         }

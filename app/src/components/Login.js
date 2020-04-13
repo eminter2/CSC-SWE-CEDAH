@@ -25,7 +25,7 @@ const Login = (props) => {
         return (
             <div className="page login">
                 <h1>Login</h1>
-                <div className="login-form">
+                <div className="user-form">
                     <p style={{color: 'red'}}>{props.loginError}</p>
                     <Userform isLoading={isLoading} handleSubmit={handleSubmit}/>                    
                     <p style={{padding: 30}}>
