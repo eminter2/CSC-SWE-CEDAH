@@ -14,10 +14,10 @@ const Dashboard = (props) => {
     const [showGroups, toggleShowGroups] = useState(true)
 
     useEffect(() => {
-        createMeetings();
+        generateData();
     },[])
 
-    const createMeetings = () => {
+    const generateData = () => {
         let username = "connor"
         let token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb25ub3IiLCJleHAiOjE1ODcwOTQ5NDZ9.hsXHXza9ZI3maHieUsIzCNFniK7jlwBJk9H6wMy5FTDDXnP1vJt3hOe0i-0xv0FDeAuqcVv7zyedrq_xm7Q48A"
         props.getUserInfo(username, token)
@@ -40,17 +40,25 @@ const Dashboard = (props) => {
                 })
             }
         count+=1;
-        // console.log(count)
         }
         setfakeMeetingList(tempArrayMeeting)
         setfakeGroupList(tempArrayGroup)
         setLoading(false)
-
     }
 
     if(!loading){
-        const allMeetings = fakeMeetingList.map((meeting) => (<Meeting key={meeting.MeetingNo} meeting={meeting}/>))
-        const allGroups = fakeGroupList.map((group) => (<Group key={group.GroupNumber} group={group}/>))
+
+        const allMeetings = fakeMeetingList.map((meeting) => (
+                <Meeting 
+                    key={meeting.MeetingNo} 
+                    meeting={meeting}/>)
+                )
+        const allGroups = fakeGroupList.map((group) => (
+                <Group 
+                    key={group.GroupNumber} 
+                    group={group}/>)
+                )
+
         return (
             <div className="page dashboard">
                 <h1>Welcome to the Dashboard, {props.currentUser}!</h1>
