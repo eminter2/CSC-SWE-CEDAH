@@ -6,67 +6,35 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "users")
 public class ApplicationUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
+    @Setter
     private long id;
+
+    @Getter
+    @Setter
     private String fullName;
+    
+    @Getter
+    @Setter
     private String email;
+
+    @Getter
+    @Setter
     private String phone;
+
+    @Getter
+    @Setter
     private String username;
+
+    @Getter
+    @Setter
     private String password;
-
-    /*
-        Getter Methods
-    */
-
-    public long getId() {
-        return id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getEmail(){
-        return email;
-    }
-
-    public String getPhone(){
-        return phone;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    /*
-        Setter Methods
-    */
-
-    public void setFullName(String fullName){
-        this.fullName = fullName;
-    }
-
-    public void setEmail(String email){
-        this.email = email;
-    }
-
-    public void setPhone(String phone){
-        this.phone = phone;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
