@@ -1,11 +1,14 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {checkIfFamiliar} from './redux/actions/actions';
-import Welcome from './components/Welcome';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import Dashboard from './components/Dashboard';
-import Logout from './components/Logout';
+import Welcome from './pages/Welcome';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Dashboard from './pages/Dashboard';
+import Logout from './pages/Logout';
+import AddGroup from './pages/AddGroup';
+import JoinGroup from './pages/JoinGroup';
+
 import {
   BrowserRouter as Router, 
   Route, 
@@ -42,11 +45,11 @@ const App = (props) => {
                 <Nav.Link href="#features">Features</Nav.Link>
                 <Nav.Link href="#pricing">Pricing</Nav.Link>
                 <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                    <NavDropdown.Item>Action</NavDropdown.Item>
+                    <NavDropdown.Item>Another action</NavDropdown.Item>
+                    <NavDropdown.Item>Something</NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                    <NavDropdown.Item>Separated link</NavDropdown.Item>
                 </NavDropdown>
               </Nav>
               <Nav>
@@ -77,6 +80,8 @@ const App = (props) => {
             props.isAuthenticated ? (
               <Dashboard/> ) : <Redirect push to="/login"/>
           )}/>
+          <Route href="" path="/group/add" exact component={AddGroup}/>
+          <Route href="" path="/group/join" exact component={JoinGroup}/>
           <Route href="" path="/logout" exact component={Logout} />
         </div>
     </Router>
