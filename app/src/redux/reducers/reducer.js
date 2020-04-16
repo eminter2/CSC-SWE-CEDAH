@@ -1,4 +1,5 @@
 const initialState = {
+    userProfile: null,
     currentUser: null,
     isAuthenticated: false,
     loginError: null,
@@ -39,6 +40,11 @@ export default function reducer(state = startState, action){
             return {
                 ...state,
                 registrationError: action.payload
+            }
+        case 'LOAD_PROFILE':
+            return {
+                ...state,
+                userProfile: action.payload 
             }
         default:
             return state;
