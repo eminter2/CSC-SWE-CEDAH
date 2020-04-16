@@ -31,6 +31,11 @@ body {
     height: 100vh;
     width: 100%;
     max-width: 2000px;
+
+    .fathead {
+        padding: 15% 50px 50px;
+        text-align: center;
+    }
 }
 
 .welcome {
@@ -70,10 +75,6 @@ body {
 }
 
 .signup {
-    h1 {
-        padding: 15% 50px 50px;
-        text-align: center;
-    }
     .btn {
         display: block;
         margin: 30px auto auto;
@@ -81,13 +82,9 @@ body {
 }
 
 .login {
-    h1 {
-        padding: 15% 50px 50px;
-        text-align: center;
-    }
 }
 
-.user-form {
+.form {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,7 +92,6 @@ body {
 }
 
 .dashboard {
-
     h1 {
         margin: 50px auto;
         padding: unset;
