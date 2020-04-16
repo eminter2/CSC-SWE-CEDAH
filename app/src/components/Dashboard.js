@@ -29,7 +29,7 @@ const Dashboard = (props) => {
                 'Host': 'Connor'
             })
         count+=1;
-        console.log(count)
+        // console.log(count)
         }
         setfakeMeetingList(tempArray)
         setLoading(false)
@@ -41,7 +41,7 @@ const Dashboard = (props) => {
 
         return (
             <div className="page dashboard">
-                <h1>Welcome to the Dashboard, {}!</h1>
+                <h1>Welcome to the Dashboard, {props.currentUser}!</h1>
                 <CardDeck style={{width: '80%', margin: 'auto'}}>
                     <CardColumns>
                         {allMeetings}
