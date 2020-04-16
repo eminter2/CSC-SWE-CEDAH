@@ -6,12 +6,19 @@ const initialState = {
     registrationError: null
 }
 
-export default function reducer(state = initialState, action){
+const startState = {
+    ...initialState,
+    token: localStorage.getItem('token')
+}
+
+export default function reducer(state = startState, action){
+    console.log('Reducer start state = ', state)
     switch(action.type){
         case 'LOGIN_USER':
             return {
                 ...state, 
-                currentUser: action.payload.user, 
+                currentUser: action.payload.user,
+                token: action.payload.token,
                 isAuthenticated: action.payload.isAuthenticated
             }
         case 'LOGIN_ERROR':
