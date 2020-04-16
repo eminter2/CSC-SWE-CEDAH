@@ -76,13 +76,15 @@ const App = (props) => {
           <Route href="" path="/" exact component={Welcome}/>
           <Route href="" path="/login" exact component={Login}/>
           <Route href="" path="/signup" exact component={Signup}/>
-          <Route href="" path="/dashboard" exact render={() => (
-            props.isAuthenticated ? (
-              <Dashboard/> ) : <Redirect push to="/login"/>
-          )}/>
-          <Route href="" path="/group/add" exact component={AddGroup}/>
-          <Route href="" path="/group/join" exact component={JoinGroup}/>
-          <Route href="" path="/logout" exact component={Logout} />
+          { props.isAuthenticated ?
+              <> 
+                <Route href="" path="/dashboard" exact component = {Dashboard}/>
+                <Route href="" path="/group/add" component={AddGroup}/>
+                <Route href="" path="/group/join" component={JoinGroup}/>
+                <Route href="" path="/logout" exact component={Logout} />
+              </>
+              : <Redirect push to="/login"/>
+          }
         </div>
     </Router>
   )
