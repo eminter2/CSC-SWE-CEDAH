@@ -19,7 +19,7 @@ const Logout = (props) => {
                 <div className="page logout">
                     <div className="goodbye">
                         <h1>Come back soon!</h1>
-                        <p>You are logged out.</p>
+                        <p>Logging you out.</p>
                         <Spinner animation="border" size="lg"/>
                     </div>
                 </div>

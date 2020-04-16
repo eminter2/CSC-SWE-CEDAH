@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {getUserInfo} from '../redux/actions/actions';
-import Meeting from './Meeting';
+import Meeting from '../components/Meeting';
 import {CardDeck, CardColumns} from 'react-bootstrap';
+import DashboardControl from '../components/DashboardControl';
 
 const Dashboard = (props) => {
 
@@ -42,6 +43,7 @@ const Dashboard = (props) => {
         return (
             <div className="page dashboard">
                 <h1>Welcome to the Dashboard, {props.currentUser}!</h1>
+                <DashboardControl/>
                 <CardDeck style={{width: '80%', margin: 'auto'}}>
                     <CardColumns>
                         {allMeetings}
