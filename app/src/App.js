@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {checkIfFamiliar} from './redux/actions/actions';
+import {checkIfFamiliar} from './redux/actions/user';
 import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import Signup from './pages/Signup';

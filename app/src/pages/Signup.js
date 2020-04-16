@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {registerUser} from '../redux/actions/actions';
+import {registerUser} from '../redux/actions/user';
 import {NavLink, Redirect} from 'react-router-dom';
 import Userform from '../components/Userform';
 

@@ -44,6 +44,7 @@ export const getUserInfo = (username, token) => {
         .then(response => response.json())
         .then(data => {
             console.log('getuserinfo response: ', data)
+            dispatch(loadProfile(data.user))
         })
     }
 }
@@ -113,4 +114,9 @@ const loginError = message => ({
 const logoutUser = () => ({
     type: 'LOGOUT_USER',
     payload: false
+})
+
+const loadProfile = (userProfile) => ({
+    type: 'LOAD_PROFILE',
+    payload: userProfile
 })

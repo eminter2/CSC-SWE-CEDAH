@@ -1,7 +1,7 @@
 import Userform from '../components/Userform';
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {userLoginFetch} from '../redux/actions/actions';
+import {userLoginFetch} from '../redux/actions/user';
 import {Redirect, NavLink} from 'react-router-dom';
 
 const Login = (props) => {

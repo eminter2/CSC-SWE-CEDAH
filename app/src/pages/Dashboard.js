@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {getUserInfo} from '../redux/actions/actions';
+import {getUserInfo} from '../redux/actions/user';
 import Meeting from '../components/Meeting';
 import {CardDeck, CardColumns} from 'react-bootstrap';
 import DashboardControl from '../components/DashboardControl';

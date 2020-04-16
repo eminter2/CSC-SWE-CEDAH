@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {logOut} from '../redux/actions/actions';
+import {logOut} from '../redux/actions/user';
 import {Redirect} from 'react-router-dom';
 import {Spinner} from 'react-bootstrap';
 
