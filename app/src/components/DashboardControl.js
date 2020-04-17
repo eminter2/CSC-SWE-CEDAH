@@ -11,15 +11,7 @@ const DashboardControl = (props) => {
     }
     return (
         <>
-        <div 
-            className="dashboard-nav"
-            style={{
-                    display: 'flex',
-                    width: '80%',
-                    paddingBottom: '10px',
-                    margin: 'auto',
-                    justifyContent: 'space-evenly',
-                    borderBottom: '1px solid grey'}}>
+        <div className="control-bar">
             <div 
                 className="filters"
                 style={{
