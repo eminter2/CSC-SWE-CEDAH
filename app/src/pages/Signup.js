@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {registerUser} from '../redux/actions/actions';
+import {registerUser} from '../redux/actions/user';
 import {NavLink, Redirect} from 'react-router-dom';
-import Userform from './Userform';
+import Userform from '../components/Userform';
 
 const Signup = (props) => {
 
@@ -20,8 +20,8 @@ const Signup = (props) => {
     else{
         return (
             <div className="page signup">
-                <h1>Sign up!</h1>
-                <div className="login-form">
+                <h1 className="fathead">Sign up!</h1>
+                <div className="form">
                     <p style={{color: 'red'}}>{props.registrationError}</p>
                     <Userform 
                         signup

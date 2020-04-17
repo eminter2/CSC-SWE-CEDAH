@@ -4,37 +4,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users")
-public class ApplicationUser {
+@Table(name = "meetup_group")
+public class MeetupGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
-    private long id;
+    private long groupId;
 
     @Getter
     @Setter
-    private String fullName;
-    
-    @Getter
-    @Setter
-    private String email;
+    private String groupName;
 
-    @Getter
-    @Setter
-    private String phone;
+    @OneToOne
+    @JoinColumn(name="owner_id", referencedColumnName = "id")
+    private ApplicationUser user;
 
-    @Getter
-    @Setter
-    private String username;
-
-    @Getter
-    @Setter
-    private String password;
 }

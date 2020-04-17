@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {logOut} from '../redux/actions/actions';
+import {logOut} from '../redux/actions/user';
 import {Redirect} from 'react-router-dom';
 import {Spinner} from 'react-bootstrap';
 
@@ -19,7 +19,7 @@ const Logout = (props) => {
                 <div className="page logout">
                     <div className="goodbye">
                         <h1>Come back soon!</h1>
-                        <p>You are logged out.</p>
+                        <p>Logging you out.</p>
                         <Spinner animation="border" size="lg"/>
                     </div>
                 </div>

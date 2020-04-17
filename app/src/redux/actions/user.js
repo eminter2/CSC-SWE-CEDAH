@@ -1,5 +1,5 @@
 export const userLoginFetch = user => {
-    console.log("In the actions.js")
+    console.log("Logging in...")
     return async dispatch => {
         //Login existing user
         return fetch('/login' , {
@@ -22,9 +22,29 @@ export const userLoginFetch = user => {
             }
             else {
                 console.log("Successful login. Token: ", data.jwt)
-                localStorage.setItem("token", data.jwt)
-                dispatch(loginUser(data.user, true))
+                console.log("user: ", data.user)
+                dispatch(loginUser(data.user, data.jwt, true))
             }
+        })
+    }
+}
+
+export const getUserInfo = (username, token) => {
+    console.log('Getting user info')
+    return async dispatch => {
+        return fetch(`/users/profile?username=${username}`, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('getuserinfo response: ', data)
+            dispatch(loadProfile(data.user))
         })
     }
 }
@@ -40,8 +60,7 @@ export const checkIfFamiliar = () => {
     console.log("Checking for token")
     return dispatch => {
         if (localStorage.token){
-            localStorage.removeItem("token")
-            dispatch(loginUser(null, true))
+            console.log("found token")
         }
     }
 }
@@ -82,9 +101,9 @@ const registrationSuccess = status => ({
     payload: status
 })
 
-const loginUser = (userObj, bool) => ({
+const loginUser = (userObj, token, bool) => ({
     type: 'LOGIN_USER',
-    payload: { user: userObj, isAuthenticated: bool }
+    payload: { user: userObj, token: token, isAuthenticated: bool }
 })
 
 const loginError = message => ({
@@ -95,4 +114,9 @@ const loginError = message => ({
 const logoutUser = () => ({
     type: 'LOGOUT_USER',
     payload: false
+})
+
+const loadProfile = (userProfile) => ({
+    type: 'LOAD_PROFILE',
+    payload: userProfile
 })
