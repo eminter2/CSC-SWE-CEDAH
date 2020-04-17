@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,14 +33,8 @@ public class UserAvailability {
     @Setter
     private Time end_time;
 
-    @Getter
-    @Setter
     @NotNull
-    private long user_id;
-
     @OneToOne
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private ApplicationUser user;
-
-
 }

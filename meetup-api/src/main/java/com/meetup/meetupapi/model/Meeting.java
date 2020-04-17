@@ -9,8 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +19,8 @@ public class Meeting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
+    @Getter
+    @Setter
     private long id;
 
     @Getter
@@ -35,20 +35,12 @@ public class Meeting {
     @Setter
     private Time meeting_end_time;
 
-    @Getter
-    @Setter
     @NotNull
-    private long group_id;
-    
-    @Getter
-    @Setter
-    @NotNull
-    private long creator_id;
-    
     @ManyToOne
     @JoinColumn(name="group_id", referencedColumnName = "group_id")
     private MeetupGroup group;
     
+    @NotNull
     @OneToOne
     @JoinColumn(name="creator_id", referencedColumnName = "id")
     private ApplicationUser user;

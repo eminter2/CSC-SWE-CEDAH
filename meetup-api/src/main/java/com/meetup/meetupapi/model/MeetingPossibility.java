@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,11 +37,7 @@ public class MeetingPossibility {
     @Setter
     private long vote_count;
 
-    @Getter
-    @Setter
     @NotNull
-    private long group_id;
-
     @ManyToOne
     @JoinColumn(name="group_id", referencedColumnName = "group_id")
     private MeetupGroup group;
