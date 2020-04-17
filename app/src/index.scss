@@ -43,7 +43,7 @@ body {
     }
 
     .slimshady {
-        padding: 5% 50px 50px;
+        padding: 20px;
         text-align: center;
     }
 }
@@ -134,4 +134,8 @@ body {
     margin: auto;
     justify-content: space-evenly;
     border-bottom: 1px solid grey;
+}
+
+th, td {
+    text-align: center !important;
 }
