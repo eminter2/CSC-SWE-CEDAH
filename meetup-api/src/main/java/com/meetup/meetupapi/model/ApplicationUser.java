@@ -1,9 +1,12 @@
 package com.meetup.meetupapi.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,4 +39,10 @@ public class ApplicationUser {
     @Getter
     @Setter
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<GroupMembership> memberships;
+
+    @OneToMany(mappedBy = "user")
+    private List<MeetupGroup> groups;
 }
