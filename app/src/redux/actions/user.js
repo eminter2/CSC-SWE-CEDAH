@@ -53,6 +53,7 @@ export const getUserInfo = (username, token) => {
 
 export const logOut = () => {
     console.log("actions.js | Logging out")
+    localStorage.removeItem('token')
     return dispatch => {
         return dispatch(logoutUser())
     }

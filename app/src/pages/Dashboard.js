@@ -18,9 +18,7 @@ const Dashboard = (props) => {
     },[])
 
     const generateData = () => {
-        let username = "connor"
-        let token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb25ub3IiLCJleHAiOjE1ODcwOTQ5NDZ9.hsXHXza9ZI3maHieUsIzCNFniK7jlwBJk9H6wMy5FTDDXnP1vJt3hOe0i-0xv0FDeAuqcVv7zyedrq_xm7Q48A"
-        props.getUserInfo(username, token)
+        props.getUserInfo(props.currentUser, props.token)
         setLoading(false)
         let tempArrayMeeting=[]
         let tempArrayGroup=[]
@@ -83,8 +81,9 @@ const Dashboard = (props) => {
     }
 }
 
-const mapStateToProps = state => ({
-    currentUser: state.reducer.currentUser
+const mapStateToProps = state => (console.log(`Dashboard state: ${Object.keys(state.reducer)}`), {
+    currentUser: state.reducer.currentUser,
+    token: state.reducer.token
 })
 
 const mapDispatchToProps = dispatch => ({
