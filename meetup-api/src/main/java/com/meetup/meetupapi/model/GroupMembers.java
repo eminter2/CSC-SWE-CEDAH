@@ -1,12 +1,10 @@
 package com.meetup.meetupapi.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -26,8 +24,8 @@ public class GroupMembers implements Serializable{
     @NotNull
     private long user_id;
 
-    @ManyToMany
+    @OneToOne
     @JoinColumn(name="user_id", referencedColumnName = "id")
-    private List<ApplicationUser> users;
+    private ApplicationUser user;
 
 }
