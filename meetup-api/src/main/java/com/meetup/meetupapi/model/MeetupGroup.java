@@ -8,13 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "meetup_group")
 public class MeetupGroup {
     @Id
@@ -22,13 +25,14 @@ public class MeetupGroup {
     @NotNull
     private long group_id;
 
-    @Getter
-    @Setter
     @NotNull
     private String group_name;
     
-    @NotNull
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="owner_id", referencedColumnName = "id")
-    private List<ApplicationUser> users;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    private ApplicationUser user;
+
+    @OneToMany(mappedBy = "group")
+    private List<GroupMembership> memberships;
+
 }
