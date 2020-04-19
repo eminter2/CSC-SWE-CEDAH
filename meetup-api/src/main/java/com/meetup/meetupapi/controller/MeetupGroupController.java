@@ -93,7 +93,12 @@ public class MeetupGroupController {
             System.out.println("Id: " + userId + "\ngroupName: " + groupName);
             int val = meetupGroupRepository.createGroup(groupName, userId);
             System.out.println("Status: " + val);
-            response.put("data", "Success!");
+            if(val > 0){
+                response.put("data", "Success!");
+            }
+            else {
+                response.put("data", "This group name is already taken.");
+            }
         } catch (Exception e){
             status = 500;
             response.put("message", e.toString());
@@ -111,7 +116,12 @@ public class MeetupGroupController {
             System.out.println("Joining group: " + groupName + "\nId: " + userId);
             int val = groupMembershipRepository.joinGroup(userId, groupName);
             System.out.println("Status: " + val);
-            response.put("data", "Success!");
+            if (val > 0){
+                response.put("data", "Success! You joined the group.");
+            }
+            else {
+                response.put("data", "This group does not exist. Was there a typo?");
+            }
         } catch (Exception e){
             response.put("message", e.toString());
             status = 500;
