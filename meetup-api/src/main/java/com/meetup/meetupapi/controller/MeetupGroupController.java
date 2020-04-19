@@ -74,9 +74,10 @@ public class MeetupGroupController {
                 inner.put("phone", groupMembership.getUser().getPhone());
                 memberArr.add(inner);
             }
-            response.put("members", memberArr);
+            response.put("data", memberArr);
 
         } catch(Exception e){
+            response.put("message", "Unable to retrieve group members");
             status = 500;
         }
 
@@ -94,10 +95,15 @@ public class MeetupGroupController {
             int val = meetupGroupRepository.createGroup(groupName, userId);
             System.out.println("Status: " + val);
             if(val > 0){
-                response.put("data", "Success!");
+                response.put(
+                    "data", 
+                    "You have created " + groupName + " successfully!"
+                );
             }
             else {
-                response.put("data", "This group name is already taken.");
+                response.put(
+                    "message", 
+                    "This group name is already taken.");
             }
         } catch (Exception e){
             status = 500;
@@ -117,10 +123,10 @@ public class MeetupGroupController {
             int val = groupMembershipRepository.joinGroup(userId, groupName);
             System.out.println("Status: " + val);
             if (val > 0){
-                response.put("data", "Success! You joined the group.");
+                response.put("data", "You have joined " + groupName);
             }
             else {
-                response.put("data", "This group does not exist. Was there a typo?");
+                response.put("message", "This group does not exist. Was there a typo?");
             }
         } catch (Exception e){
             response.put("message", e.toString());
@@ -141,10 +147,10 @@ public class MeetupGroupController {
             System.out.println("Removing " + userId + "from group " + groupId);
             int val = groupMembershipRepository.deleteFromGroup(userId, groupId);
             if ( val > 0 ) {
-                response.put("data", "You have been successfully removed from the group.");
+                response.put("data", "You have been successfully removed from the group");
             }
             else {
-                response.put("data", "Something went wrong");
+                response.put("message", "Something went wrong");
                 status = 500;
             }
         } catch (Exception e){
