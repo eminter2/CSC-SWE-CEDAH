@@ -14,9 +14,9 @@ const Dashboard = (props) => {
 
     useEffect(() => {
         getData();
-    },[])
+    }, [loading])
 
-    const getData = () => {
+    const getData = async () => {
         console.log(props)
         setLoading(true)
         props.getMyGroups(1, props.token)
@@ -24,11 +24,6 @@ const Dashboard = (props) => {
     }
 
     if(!loading){
-        const allGroups = props.groupList.map((group) => (
-            <Group
-                key={group.group_id}
-                group={group}/>
-        ))
         return (
             <div className="page dashboard">
                 <h1>Welcome to the Dashboard, {props.username}!</h1>
@@ -36,7 +31,15 @@ const Dashboard = (props) => {
                     { 
                         showGroups ? 
                         <div style={{width: '80%', margin: 'auto'}}>
-                            {allGroups}
+                            {props.groupList ?
+                                props.groupList.map((group) => (
+                                    <Group
+                                        key={group.group_id}
+                                        group={group}/>
+                                ))
+                                :
+                                <Spinner animation="border" size="lg"/>
+                            }
                         </div>
                         :
                         <CardDeck style={{width: '80%', margin: 'auto'}}>
@@ -67,12 +70,4 @@ const Dashboard = (props) => {
         getMyGroups : (userId, token) => dispatch(getMyGroups(userId, token))
     })
     
-    export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
-
-
-    // const allMeetings = fakeMeetingList.map((meeting) => (
-    //         <Meeting 
-    //             key={meeting.MeetingNo} 
-    //             meeting={meeting}/>)
-    //         )
-    
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
