@@ -1,58 +1,99 @@
-import React from 'react';
 import Calendar from '../components/Calendar';
-import {Col, Nav, Row, Tab} from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import Member from '../components/Member';
+import {getMembers} from '../redux/actions/groups';
 
-const Groupviewer = () => {
-    let groupName = useParams().id
-    return (
-        <div className="page group-viewer">
-            <h1 className="slimshady">{groupName}</h1>
-            <Tab.Container defaultActiveKey="first" >
-                <Row
-                    style={{
-                        minHeight: '80vh',
-                        width: '95%',
-                        margin: 'auto',
-                        padding: '20px 5px',
-                        boxShadow: '0px 0px 5px lightgrey'
-                    }}>
-                    <Col 
-                        sm={3} 
+import React, { useState,useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import {Col, Nav, Row, Tab, Spinner} from 'react-bootstrap';
+
+const Groupviewer = (props) => {
+    const [loading, setLoading] = useState(true)
+
+    let groupName = useParams().name
+    let groupId = useParams().id
+
+    useEffect(() => {
+        getData();
+    }, [loading])
+
+    const getData = async () => {
+        setLoading(true)
+        props.getMembers(groupId, props.token)
+        setLoading(false)
+    }
+    
+    if(loading){
+        return (
+            <Spinner animation="border" size="lg"/>
+        )
+    }
+    else {
+        return (
+            <div className="page group-viewer">
+                <h1 className="slimshady">{groupName}</h1>
+                <Tab.Container defaultActiveKey="first" >
+                    <Row
                         style={{
-                            borderRight: '1px solid lightgrey',
-                            paddingTop: '15px',
-                            paddingBottom: '15px'
+                            minHeight: '80vh',
+                            width: '95%',
+                            margin: 'auto',
+                            padding: '20px 5px',
+                            boxShadow: '0px 0px 5px lightgrey'
                         }}>
-                        <Nav variant="pills" className="flex-column">
-                            <Nav.Item >
-                                <Nav.Link eventKey="first">About</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link eventKey="second">Members</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link eventKey="third">Calendar</Nav.Link>
-                            </Nav.Item>
-                        </Nav>
-                    </Col>
-                    <Col sm={9}>
-                        <Tab.Content style={{padding: '15px'}}>
-                            <Tab.Pane eventKey="first">
-                                {'Something 1'}
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="second">
-                                {'Something 2'}
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="third">
-                                <Calendar/>
-                            </Tab.Pane>
-                        </Tab.Content>
-                    </Col>
-                </Row>
-            </Tab.Container>
-        </div>
-    )
+                        <Col 
+                            sm={3} 
+                            style={{
+                                borderRight: '1px solid lightgrey',
+                                paddingTop: '15px',
+                                paddingBottom: '15px'
+                            }}>
+                            <Nav variant="pills" className="flex-column">
+                                <Nav.Item >
+                                    <Nav.Link eventKey="first">About</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="second">Members</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="third">Calendar</Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                        </Col>
+                        <Col sm={9}>
+                            <Tab.Content style={{padding: '15px'}}>
+                                <Tab.Pane eventKey="first">
+                                    {'Something 1'}
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="second">
+                                {props.members ?
+                                    props.members.map((member, index) => (
+                                        <Member
+                                            key={index}
+                                            member={member}/>
+                                    )) :
+                                    <Spinner animation="border" size="lg"/>
+                                }
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="third">
+                                    <Calendar/>
+                                </Tab.Pane>
+                            </Tab.Content>
+                        </Col>
+                    </Row>
+                </Tab.Container>
+            </div>
+        )
+    }
 }
 
-export default Groupviewer;
+const mapStateToProps = state => ({
+    members: state.groups.members,
+    token: state.user.token
+})
+
+const mapDispatchToProps = dispatch => ({
+    getMembers: (groupId, token) => dispatch(getMembers(groupId, token))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Groupviewer);
