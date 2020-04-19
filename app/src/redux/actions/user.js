@@ -1,7 +1,6 @@
 export const userLoginFetch = user => {
     console.log("Logging in...")
     return async dispatch => {
-        //Login existing user
         return fetch('/login' , {
             method: 'POST',
             cache: 'no-cache',
@@ -56,15 +55,6 @@ export const logOut = () => {
     localStorage.removeItem('token')
     return dispatch => {
         return dispatch(logoutUser())
-    }
-}
-
-export const checkIfFamiliar = () => {
-    console.log("Checking for token")
-    return dispatch => {
-        if (localStorage.token){
-            console.log("found token")
-        }
     }
 }
 
