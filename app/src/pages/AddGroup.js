@@ -14,17 +14,24 @@ const AddGroup = (props) => {
     return (
         <div className="page add-group">
             <h1 className="huskyhead">Add a Group</h1>
-            <div className="form add-group"></div>
-            <Form onSubmit={e => handleSubmit(e)}>
-                <Form.Group controlId="formgroupName">
-                    <Form.Label>Group Name</Form.Label>
-                    <Form.Control 
-                        type="text" 
-                        placeholder="Group Name"
-                        onChange={e => setName(e.target.value)} />
-                </Form.Group>
-                <Button type="submit">Submit</Button>
-            </Form>            
+            <div className="form add-group">
+                <Form 
+                    style={{
+                        width: '30%',
+                        maxWidth: 500,
+                        minWidth: 250
+                    }}
+                    onSubmit={e => handleSubmit(e)}>
+                    <Form.Group controlId="formgroupName">
+                        <Form.Label>Group Name</Form.Label>
+                        <Form.Control 
+                            type="text" 
+                            placeholder="Group Name"
+                            onChange={e => setName(e.target.value)} />
+                    </Form.Group>
+                    <Button type="submit">Submit</Button>
+                </Form>  
+            </div>          
         </div>
     )
 }
