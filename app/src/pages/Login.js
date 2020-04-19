@@ -1,14 +1,14 @@
 import Userform from '../components/Userform';
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {userLoginFetch} from '../redux/actions/user';
+import {userLoginFetch, getUserInfo} from '../redux/actions/user';
 import {Redirect, NavLink} from 'react-router-dom';
 
 const Login = (props) => {
 
     const [isLoading, setLoading] = useState(false);
 
-    const handleSubmit = (event, formData) => {
+    const handleSubmit = async (event, formData) => {
         event.preventDefault();
         setLoading(true);
         let formUser = {
@@ -19,8 +19,7 @@ const Login = (props) => {
         setLoading(false);
     }
 
-    if(props.isAuthenticated) return <Redirect push exact to="/dashboard"/>
-
+    if(props.isAuthenticated) return <Redirect push exact to="/fetcher"/>
     else {
         return (
             <div className="page login">
@@ -40,11 +39,14 @@ const Login = (props) => {
 
 const mapStateToProps = state => ({
     loginError: state.user.loginError,
-    isAuthenticated: state.user.isAuthenticated
+    isAuthenticated: state.user.isAuthenticated,
+    username: state.user.username,
+    token: state.user.token
 })
 
 const mapDispatchToProps = dispatch => ({
-    userLoginFetch: formUser => dispatch(userLoginFetch(formUser))
+    userLoginFetch: formUser => dispatch(userLoginFetch(formUser)),
+    getUserInfo : (username, token) => dispatch(getUserInfo(username, token))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
