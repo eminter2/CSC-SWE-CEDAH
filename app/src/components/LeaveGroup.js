@@ -17,7 +17,7 @@ const LeaveGroup = (props) => {
             setLoading(true)
             console.log('leaving group')
             console.log(`leaving ${props.groupName} as user ${props.userId} with token ${props.token}`)
-            leaveGroup(props.groupId, props.userId, props.token)
+            props.leaveGroup(props.groupId, props.userId, props.token)
             setTimeout(() => {
                 setRedirect(true)
                 setLoading(false)
