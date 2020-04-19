@@ -1,7 +1,6 @@
 export const userLoginFetch = user => {
     console.log("Logging in...")
     return async dispatch => {
-        //Login existing user
         return fetch('/login' , {
             method: 'POST',
             cache: 'no-cache',
@@ -26,6 +25,7 @@ export const userLoginFetch = user => {
                 dispatch(loginUser(data.user, data.jwt, true))
             }
         })
+        .catch(err => console.log(err))
     }
 }
 
@@ -46,22 +46,15 @@ export const getUserInfo = (username, token) => {
             console.log('getuserinfo response: ', data)
             dispatch(loadProfile(data.user))
         })
+        .catch(err => console.log(err))
     }
 }
 
 export const logOut = () => {
     console.log("actions.js | Logging out")
+    localStorage.removeItem('token')
     return dispatch => {
         return dispatch(logoutUser())
-    }
-}
-
-export const checkIfFamiliar = () => {
-    console.log("Checking for token")
-    return dispatch => {
-        if (localStorage.token){
-            console.log("found token")
-        }
     }
 }
 
@@ -88,6 +81,7 @@ export const registerUser = (formData) => {
                 dispatch(registrationSuccess(true))
             }
         })
+        .catch(err => console.log(err))
     }
 }
 

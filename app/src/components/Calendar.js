@@ -7,21 +7,21 @@ const Calendar = () => {
     let time = 9
     let rows = []
     while(count<17){
-        rows.push(<tr> 
-            <td class="my-td">
+        rows.push(<tr key={count-8}> 
+            <td className="my-td">
                 {
                     (time>12) ? time-12 : time
                 }:{
-                    (time%2==0) ? '00' : '30'
+                    (time%2===0) ? '00' : '30'
                 }
             </td>
-            <td class="my-td"></td>
-            <td class="my-td"></td>
-            <td class="my-td"></td>
-            <td class="my-td"></td>
-            <td class="my-td"></td>
-            <td class="my-td"></td>
-            <td class="my-td"></td>
+            <td className="my-td"></td>
+            <td className="my-td"></td>
+            <td className="my-td"></td>
+            <td className="my-td"></td>
+            <td className="my-td"></td>
+            <td className="my-td"></td>
+            <td className="my-td"></td>
         </tr>)
         count++
         time++

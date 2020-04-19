@@ -55,6 +55,24 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             }
             return null;
         }
+
+        // Exception here for expired token
+        //     try{
+        //         String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
+        //         .build()
+        //         .verify(token.replace(TOKEN_PREFIX, ""))
+        //         .getSubject();
+                
+        //         if (user != null) {
+        //             return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+        //         }
+        //         return null;
+        //     } catch(Exception e){
+        //         System.out.println("JWT validation failed");
+        //     }
+        // }
+        // return null;
+
         return null;
     }
 }

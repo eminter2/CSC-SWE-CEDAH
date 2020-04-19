@@ -7,8 +7,8 @@ const Group = (props) => {
     return (
         <Card style={{marginBottom: 15}}>
             <Card.Header as="h5">
-                <strong>Group</strong> {props.group.GroupNumber}<br/>
-                <strong>Owner</strong> {props.group.Owner}
+                <strong>{props.group.group_name}</strong><br/>
+                <strong>Owner</strong> {props.group.owner_fullName}
                 </Card.Header>
             <Card.Body>
                 <Card.Text>
@@ -16,7 +16,7 @@ const Group = (props) => {
                 </Card.Text>
                 <Button 
                     as={NavLink}
-                    to={`/group/view/${props.group.GroupNumber}`}
+                    to={`/group/view/${props.group.group_name}/${props.group.group_id}`}
                     variant="primary" 
                     >
                         Open Group

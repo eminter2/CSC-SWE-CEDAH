@@ -38,8 +38,8 @@ const Signup = (props) => {
 }
 
 const mapStateToProps = state => ({
-    registrationError: state.reducer.registrationError,
-    registrationSuccess: state.reducer.registrationSuccess
+    registrationError: state.user.registrationError,
+    registrationSuccess: state.user.registrationSuccess
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -1,29 +1,48 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {addGroup} from '../redux/actions/groups'
-import {Button} from 'react-bootstrap';
+import {Form, Button} from 'react-bootstrap';
 
 const AddGroup = (props) => {
-    const handleClick = () => {
-        console.log('Add group props: ', props)
-        props.addGroup(props.userId, props.token)
+    const [groupName, setName] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        // console.log('Add group props: ', props)
+        props.addGroup(props.userId, props.token, groupName)
     }
     return (
         <div className="page add-group">
             <h1 className="huskyhead">Add a Group</h1>
-            <div className="form add-group"></div>
-            <Button onClick={handleClick}>Submit</Button>
+            <div className="form add-group">
+                <Form 
+                    style={{
+                        width: '30%',
+                        maxWidth: 500,
+                        minWidth: 250
+                    }}
+                    onSubmit={e => handleSubmit(e)}>
+                    <Form.Group controlId="formgroupName">
+                        <Form.Label>Group Name</Form.Label>
+                        <Form.Control 
+                            type="text" 
+                            placeholder="Group Name"
+                            onChange={e => setName(e.target.value)} />
+                    </Form.Group>
+                    <Button type="submit">Submit</Button>
+                </Form>  
+            </div>          
         </div>
     )
 }
 
 const mapStateToProps = state => ({
-    userId: state.reducer.userProfile.id,
-    token: state.reducer.token
+    userId: state.user.profile.id,
+    token: state.user.token
 })
 
 const mapDispatchToProps = dispatch => ({
-    addGroup: (userId, token) => dispatch(addGroup(userId, token))
+    addGroup: (userId, token, groupName) => dispatch(addGroup(userId, token, groupName))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddGroup);
