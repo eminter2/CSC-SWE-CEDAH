@@ -5,6 +5,7 @@ import java.util.List;
 import com.meetup.meetupapi.model.MeetupGroup;
 import com.meetup.meetupapi.repo.MeetupGroupRepository;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,11 +26,22 @@ public class MeetupGroupController {
     @PostMapping("/retrieve")
     public ResponseEntity<?> getGroups(@RequestParam("id") int userId){
         JSONObject response = new JSONObject();
+        JSONArray groupArr = new JSONArray();
         int status = 200;
         List<MeetupGroup> userGroups;
+
         try {
             userGroups = meetupGroupRepository.findMyGroups(userId);
-            response.put("groups", userGroups);
+            for(MeetupGroup group : userGroups){
+                JSONObject inner = new JSONObject();
+                inner.put("group_id", group.getGroup_id());
+                inner.put("group_name", group.getGroup_name());
+                inner.put("owner_id", group.getUser().getId());
+                inner.put("owner_username", group.getUser().getUsername());
+                inner.put("owner_fullName", group.getUser().getFullName());
+                groupArr.add(inner);
+            };
+            response.put("groups", groupArr);
         } catch (Exception e){
             System.out.println("Query failed");
             status = 500;
