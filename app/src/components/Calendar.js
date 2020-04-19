@@ -12,7 +12,7 @@ const Calendar = () => {
                 {
                     (time>12) ? time-12 : time
                 }:{
-                    (time%2==0) ? '00' : '30'
+                    (time%2===0) ? '00' : '30'
                 }
             </td>
             <td className="my-td"></td>
