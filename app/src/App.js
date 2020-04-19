@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {checkIfFamiliar} from './redux/actions/user';
 import Welcome from './pages/Welcome';
 import Login from './pages/Login';
+import Fetcher from './pages/Fetcher';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import Logout from './pages/Logout';
@@ -20,11 +20,6 @@ import {Navbar, Nav, NavDropdown, Button} from 'react-bootstrap';
 
 
 const App = (props) => {
-
-  useEffect(() => {
-    props.checkIfFamiliar()
-  })
-
   return (
      <Router>
         <div className="App">
@@ -76,6 +71,7 @@ const App = (props) => {
           </Navbar>
           <Route href="" path="/" exact component={Welcome}/>
           <Route href="" path="/login" exact component={Login}/>
+          <Route href="" path="/fetcher" exact component={Fetcher}/>
           <Route href="" path="/signup" exact component={Signup}/>
           { props.isAuthenticated ?
               <> 
@@ -96,8 +92,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.user.isAuthenticated
 })
 
-const mapDispatchToProps = dispatch => ({
-  checkIfFamiliar: () => dispatch(checkIfFamiliar())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, null)(App);
