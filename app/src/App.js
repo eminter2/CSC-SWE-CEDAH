@@ -1,5 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {hideModal} from './redux/actions/app';
+import MyModal from './components/MyModal';
 import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import Fetcher from './pages/Fetcher';
@@ -69,6 +71,11 @@ const App = (props) => {
               </Nav>
             </Navbar.Collapse>
           </Navbar>
+          <MyModal 
+            show={props.showModal}
+            onHide={props.hideModal}
+            success={props.success}
+            message={props.message}/>
           <Route href="" path="/" exact component={Welcome}/>
           <Route href="" path="/login" exact component={Login}/>
           <Route href="" path="/fetcher" exact component={Fetcher}/>
@@ -89,7 +96,14 @@ const App = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.user.isAuthenticated
+  isAuthenticated: state.user.isAuthenticated,
+  showModal: state.app.showModal,
+  success: state.app.success,
+  message: state.app.message
 })
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = dispatch => ({
+  hideModal: () => dispatch(hideModal())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

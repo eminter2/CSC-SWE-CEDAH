@@ -63,7 +63,6 @@ public class MeetupGroupController {
         JSONArray memberArr = new JSONArray();
         int status = 200;
         List<GroupMembership> members;
-        System.out.println("id" + groupId);
         try {
             members = groupMembershipRepository.findMembers(groupId);
             for (GroupMembership groupMembership : members) {
@@ -74,12 +73,13 @@ public class MeetupGroupController {
                 inner.put("phone", groupMembership.getUser().getPhone());
                 memberArr.add(inner);
             }
-            response.put("members", memberArr);
+            response.put("data", memberArr);
 
         } catch(Exception e){
+            response.put("message", "Unable to retrieve group members");
             status = 500;
         }
-
+        System.out.println("\n" + response);
         return ResponseEntity.status(status).body(response);
     }
 
@@ -90,19 +90,25 @@ public class MeetupGroupController {
         JSONObject response = new JSONObject();
         int status = 200;
         try {
-            System.out.println("Id: " + userId + "\ngroupName: " + groupName);
+            // System.out.println("Id: " + userId + "\ngroupName: " + groupName);
             int val = meetupGroupRepository.createGroup(groupName, userId);
-            System.out.println("Status: " + val);
+            // System.out.println("Status: " + val);
             if(val > 0){
-                response.put("data", "Success!");
+                response.put(
+                    "data", 
+                    "You have created " + groupName + " successfully!"
+                );
             }
             else {
-                response.put("data", "This group name is already taken.");
+                response.put(
+                    "message", 
+                    "This group name is already taken.");
             }
         } catch (Exception e){
             status = 500;
             response.put("message", e.toString());
         }
+        System.out.println("\n" + response);
         return ResponseEntity.status(status).body(response);
     }
 
@@ -113,19 +119,20 @@ public class MeetupGroupController {
         JSONObject response = new JSONObject();
         int status = 200;
         try {
-            System.out.println("Joining group: " + groupName + "\nId: " + userId);
+            // System.out.println("Joining group: " + groupName + "\nId: " + userId);
             int val = groupMembershipRepository.joinGroup(userId, groupName);
-            System.out.println("Status: " + val);
+            // System.out.println("Status: " + val);
             if (val > 0){
-                response.put("data", "Success! You joined the group.");
+                response.put("data", "You have joined " + groupName);
             }
             else {
-                response.put("data", "This group does not exist. Was there a typo?");
+                response.put("message", "This group does not exist. Was there a typo?");
             }
         } catch (Exception e){
             response.put("message", e.toString());
             status = 500;
         }
+        System.out.println("\n" + response);
         return ResponseEntity.status(status).body(response);
     }
 
@@ -141,10 +148,10 @@ public class MeetupGroupController {
             System.out.println("Removing " + userId + "from group " + groupId);
             int val = groupMembershipRepository.deleteFromGroup(userId, groupId);
             if ( val > 0 ) {
-                response.put("data", "You have been successfully removed from the group.");
+                response.put("data", "You have been successfully removed from the group");
             }
             else {
-                response.put("data", "Something went wrong");
+                response.put("message", "Something went wrong");
                 status = 500;
             }
         } catch (Exception e){

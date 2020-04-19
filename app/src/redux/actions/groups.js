@@ -35,11 +35,11 @@ export const getMembers = (groupId, token) => {
             response.json()
         )
         .then(data => {
-            if(data){
-                console.log('Members: ', data.members)
-                dispatch(setGroupMembers(data.members))
-            }else {
-                console.log("something up")
+            if(data.data){
+                console.log('Members: ', data.data)
+                dispatch(setGroupMembers(data.data))
+            }else{
+                console.log("Oops!\n", data.message)
             }
         })
         .catch(err => console.log('Error: ', err))
@@ -60,14 +60,18 @@ export const addGroup = (userId, token, groupName) => {
         })
         .then(response => response.json())
         .then(data => {
+            let success = false;
+            let message = '';
             if(data.message){
-                console.log('Something went wrong:\n', data.message)
-                // dispatch(addGroupResponse("Success!"))
+                console.log('Oops!\n', data.message)
+                message = data.message
             }
-            else{
-                console.log('Response: ', data.data)
+            else {
+                console.log('Success\n', data.data)
+                success = true
+                message = data.data
             }
-            // dispatch(addGroup(data.group))
+            dispatch(showModal('SHOW_MODAL', success, message))
         })
         .catch(err => console.log('Error: ', err))
     }
@@ -87,12 +91,18 @@ export const joinGroup = (userId, token, groupName) => {
         })
         .then(response => response.json())
         .then(data => {
+            let success = false
+            let message = ''
             if(data.message){
                 console.log('Something went wrong:\n', data.message)
+                message = 'You are already a member of this group'
             }
             else {
                 console.log('Response: ', data.data)
+                success = true
+                message = data.data
             }
+            dispatch(showModal('SHOW_MODAL', success, message))
         })
         .catch(err => console.log('Error: ', err))
     }
@@ -112,12 +122,18 @@ export const leaveGroup = (groupId, userId, token) => {
             })
             .then(response => response.json())
             .then(data => {
+                let success = false;
+                let message = '';
                 if(data.message){
                     console.log('Something went wrong:\n', data.message)
+                    message = data.message
                 }
                 else {
                     console.log('Response: ', data.data)
+                    success = true
+                    message = data.data
                 }
+                dispatch(showModal('SHOW_MODAL', success, message))
             })
             .catch(err => console.log('Error: ', err))
     }
@@ -131,4 +147,9 @@ const setGroups = (groups) => ({
 const setGroupMembers = members => ({
     type: 'FETCH_MEMBERS',
     payload: members
+})
+
+const showModal = (type, success, message) => ({
+    type: type,
+    payload: {success: success, message: message}
 })
