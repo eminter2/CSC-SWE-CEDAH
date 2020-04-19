@@ -63,7 +63,6 @@ public class MeetupGroupController {
         JSONArray memberArr = new JSONArray();
         int status = 200;
         List<GroupMembership> members;
-        System.out.println("id" + groupId);
         try {
             members = groupMembershipRepository.findMembers(groupId);
             for (GroupMembership groupMembership : members) {
@@ -80,7 +79,7 @@ public class MeetupGroupController {
             response.put("message", "Unable to retrieve group members");
             status = 500;
         }
-
+        System.out.println("\n" + response);
         return ResponseEntity.status(status).body(response);
     }
 
@@ -91,9 +90,9 @@ public class MeetupGroupController {
         JSONObject response = new JSONObject();
         int status = 200;
         try {
-            System.out.println("Id: " + userId + "\ngroupName: " + groupName);
+            // System.out.println("Id: " + userId + "\ngroupName: " + groupName);
             int val = meetupGroupRepository.createGroup(groupName, userId);
-            System.out.println("Status: " + val);
+            // System.out.println("Status: " + val);
             if(val > 0){
                 response.put(
                     "data", 
@@ -109,6 +108,7 @@ public class MeetupGroupController {
             status = 500;
             response.put("message", e.toString());
         }
+        System.out.println("\n" + response);
         return ResponseEntity.status(status).body(response);
     }
 
@@ -119,9 +119,9 @@ public class MeetupGroupController {
         JSONObject response = new JSONObject();
         int status = 200;
         try {
-            System.out.println("Joining group: " + groupName + "\nId: " + userId);
+            // System.out.println("Joining group: " + groupName + "\nId: " + userId);
             int val = groupMembershipRepository.joinGroup(userId, groupName);
-            System.out.println("Status: " + val);
+            // System.out.println("Status: " + val);
             if (val > 0){
                 response.put("data", "You have joined " + groupName);
             }
@@ -132,6 +132,7 @@ public class MeetupGroupController {
             response.put("message", e.toString());
             status = 500;
         }
+        System.out.println("\n" + response);
         return ResponseEntity.status(status).body(response);
     }
 
