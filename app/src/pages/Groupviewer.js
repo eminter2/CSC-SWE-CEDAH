@@ -1,4 +1,5 @@
 import Calendar from '../components/Calendar';
+import LeaveGroup from '../components/LeaveGroup';
 import Member from '../components/Member';
 import {getMembers} from '../redux/actions/groups';
 
@@ -58,6 +59,12 @@ const Groupviewer = (props) => {
                                 <Nav.Item>
                                     <Nav.Link eventKey="third">Calendar</Nav.Link>
                                 </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link 
+                                        eventKey="fourth"
+                                        className="leave-group">Leave Group
+                                    </Nav.Link>
+                                </Nav.Item>
                             </Nav>
                         </Col>
                         <Col sm={9}>
@@ -77,6 +84,11 @@ const Groupviewer = (props) => {
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="third">
                                     <Calendar/>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="fourth">
+                                    <LeaveGroup
+                                        groupId={groupId}
+                                        groupName={groupName}/>
                                 </Tab.Pane>
                             </Tab.Content>
                         </Col>
