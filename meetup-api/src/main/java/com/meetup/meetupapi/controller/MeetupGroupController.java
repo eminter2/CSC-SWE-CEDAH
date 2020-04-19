@@ -84,10 +84,21 @@ public class MeetupGroupController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addGroup(@RequestParam("id") int userId){
+    public ResponseEntity<?> addGroup(
+            @RequestParam("id") int userId,
+            @RequestParam("name") String groupName){
         JSONObject response = new JSONObject();
-        response.put("data", "success");
-        return ResponseEntity.status(200).body(response);
+        int status = 200;
+        try {
+            System.out.println("Id: " + userId + "\ngroupName: " + groupName);
+            int val = meetupGroupRepository.createGroup(groupName, userId);
+            System.out.println("Status: " + val);
+            response.put("data", "success");
+        } catch (Exception e){
+            status = 500;
+            response.put("message", e.toString());
+        }
+        return ResponseEntity.status(status).body(response);
     }
 
     @PostMapping("/join")
