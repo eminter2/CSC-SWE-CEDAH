@@ -13,7 +13,34 @@ export const getMyGroups = (userId, token) => {
         .then(response => response.json())
         .then(data => {
             console.log('Response: ', data.groups)
-            dispatch(fetchGroups(data.groups))
+            dispatch(setGroups(data.groups))
+        })
+        .catch(err => console.log('Error: ', err))
+    }
+}
+
+export const getMembers = (groupId, token) => {
+    console.log('entered')
+    return async dispatch => {
+        return fetch(`/groups/members?id=${groupId}`, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => 
+            response.json()
+        )
+        .then(data => {
+            if(data){
+                console.log('Members: ', data.members)
+                dispatch(setGroupMembers(data.members))
+            }else {
+                console.log("something up")
+            }
         })
         .catch(err => console.log('Error: ', err))
     }
@@ -61,7 +88,12 @@ export const joinGroup = (userId, token) => {
     }
 }
 
-const fetchGroups = (groups) => ({
+const setGroups = (groups) => ({
     type: 'FETCH_GROUPS',
     payload: groups
+})
+
+const setGroupMembers = members => ({
+    type: 'FETCH_MEMBERS',
+    payload: members
 })
