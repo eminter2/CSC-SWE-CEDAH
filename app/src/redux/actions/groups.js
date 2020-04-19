@@ -73,10 +73,10 @@ export const addGroup = (userId, token, groupName) => {
     }
 }
 
-export const joinGroup = (userId, token) => {
+export const joinGroup = (userId, token, groupName) => {
     console.log('made it to joinGroup')
     return dispatch => {
-        return fetch(`/groups/join?id=${userId}`, {
+        return fetch(`/groups/join?id=${userId}&name=${groupName}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -87,7 +87,12 @@ export const joinGroup = (userId, token) => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Response: ', data.data)
+            if(data.message){
+                console.log('Something went wrong:\n', data.message)
+            }
+            else {
+                console.log('Response: ', data.data)
+            }
         })
         .catch(err => console.log('Error: ', err))
     }
