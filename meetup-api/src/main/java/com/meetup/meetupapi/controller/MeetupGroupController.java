@@ -1,5 +1,6 @@
 package com.meetup.meetupapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.meetup.meetupapi.model.GroupMembership;
@@ -167,19 +168,44 @@ public class MeetupGroupController {
         return ResponseEntity.status(status).body(response);
     }
 
+    /*
+        Here is where the user availability data is located. 
+        Logic for calculating meetings should go here.
+
+        Each availability belongs to a user which one can get
+        by using getId() or any of its class methods. Parse
+        this data into meeting possibilty code for calculations. 
+        
+        Print statements for right now to help visualize
+    */
     @PostMapping("/availabilities")
     public ResponseEntity<?> getAvailabilities(
-            @RequestParam("id") long userId
+            @RequestParam("id") int groupId
     ){
-        List<UserAvailability> availabilitiesList = userAvailabilityRepository.findAllByUserId(userId);
-        for(UserAvailability availability: availabilitiesList){
-            System.out.println(
-                    "Availability: " +
-                    availability.getUser().getFullName() + "\n" +
-                    availability.getDay() + "\n" +
-                    availability.getStart_time() + "\n" +
-                    availability.getEnd_time() + "\n"
-            );      
+        List<GroupMembership> members;
+        List<UserAvailability> availabilitiesList;
+        List<Long> userIds = new ArrayList<Long>();
+        try {
+            // For each membership, get userId
+            members = groupMembershipRepository.findMembers(groupId);
+            for(GroupMembership membership: members){
+                userIds.add(membership.getUser().getId());
+            }
+            // For each userId, get all availability
+            for(Long id: userIds){
+                availabilitiesList = userAvailabilityRepository.findAllByUserId(id);
+                for(UserAvailability availability: availabilitiesList){
+                    System.out.println(
+                            "Availability: " +
+                            availability.getUser().getFullName() + "\n" +
+                            availability.getDay() + "\n" +
+                            availability.getStart_time() + "\n" +
+                            availability.getEnd_time() + "\n"
+                    );      
+                } 
+            }
+        } catch (Exception e){
+            System.out.println("Exception: " + e);
         }
 
         return ResponseEntity.status(200).body("ok");
