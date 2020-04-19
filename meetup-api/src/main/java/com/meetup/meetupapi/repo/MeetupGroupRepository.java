@@ -13,6 +13,5 @@ public interface MeetupGroupRepository extends JpaRepository<MeetupGroup, Long> 
         "WHERE G.group_id = M.group_id AND M.user_id = ?1 AND G.owner_id = U.id",
         nativeQuery = true
     )
-
     List<MeetupGroup> findMyGroups(int userId);
 }
