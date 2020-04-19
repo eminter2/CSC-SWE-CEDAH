@@ -93,7 +93,7 @@ public class MeetupGroupController {
             System.out.println("Id: " + userId + "\ngroupName: " + groupName);
             int val = meetupGroupRepository.createGroup(groupName, userId);
             System.out.println("Status: " + val);
-            response.put("data", "success");
+            response.put("data", "Success!");
         } catch (Exception e){
             status = 500;
             response.put("message", e.toString());
@@ -102,9 +102,20 @@ public class MeetupGroupController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<?> joinGroup(@RequestParam("id") int userId){
+    public ResponseEntity<?> joinGroup(
+            @RequestParam("id") int userId,
+            @RequestParam("name") String groupName){
         JSONObject response = new JSONObject();
-        response.put("data", "success");
-        return ResponseEntity.status(200).body(response);
+        int status = 200;
+        try {
+            System.out.println("Joining group: " + groupName + "\nId: " + userId);
+            int val = groupMembershipRepository.joinGroup(userId, groupName);
+            System.out.println("Status: " + val);
+            response.put("data", "Success!");
+        } catch (Exception e){
+            response.put("message", e.toString());
+            status = 500;
+        }
+        return ResponseEntity.status(status).body(response);
     }
 }
