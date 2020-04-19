@@ -1,6 +1,6 @@
 const initialState = {
-    userProfile: null,
-    currentUser: null,
+    profile: null,
+    username: null,
     isAuthenticated: false,
     loginError: null,
     registrationSuccess: false,
@@ -12,13 +12,12 @@ const startState = {
     token: localStorage.getItem('token')
 }
 
-export default function reducer(state = startState, action){
-    console.log('Reducer start state = ', state)
+export default function userReducer(state = startState, action){
     switch(action.type){
         case 'LOGIN_USER':
             return {
                 ...state, 
-                currentUser: action.payload.user,
+                username: action.payload.user,
                 token: action.payload.token,
                 isAuthenticated: action.payload.isAuthenticated
             }
@@ -44,7 +43,7 @@ export default function reducer(state = startState, action){
         case 'LOAD_PROFILE':
             return {
                 ...state,
-                userProfile: action.payload 
+                profile: action.payload 
             }
         default:
             return state;
