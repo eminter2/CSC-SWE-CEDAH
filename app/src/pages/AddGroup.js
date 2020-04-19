@@ -7,8 +7,8 @@ const AddGroup = (props) => {
     const [groupName, setName] = useState('');
 
     const handleSubmit = (e) => {
+        //Need to validate form (empty input allowed right now)
         e.preventDefault()
-        // console.log('Add group props: ', props)
         props.addGroup(props.userId, props.token, groupName)
     }
     return (
@@ -42,7 +42,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    addGroup: (userId, token, groupName) => dispatch(addGroup(userId, token, groupName))
+    addGroup: (userId, token, groupName) => dispatch(addGroup(userId, token, groupName)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddGroup);
