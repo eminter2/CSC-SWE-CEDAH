@@ -93,7 +93,7 @@ const App = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.reducer.isAuthenticated
+  isAuthenticated: state.user.isAuthenticated
 })
 
 const mapDispatchToProps = dispatch => ({

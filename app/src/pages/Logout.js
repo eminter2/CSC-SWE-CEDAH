@@ -34,7 +34,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.reducer.isAuthenticated
+    isAuthenticated: state.user.isAuthenticated
   })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logout);

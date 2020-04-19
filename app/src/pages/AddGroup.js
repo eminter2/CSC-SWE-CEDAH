@@ -18,8 +18,8 @@ const AddGroup = (props) => {
 }
 
 const mapStateToProps = state => ({
-    userId: state.reducer.userProfile.id,
-    token: state.reducer.token
+    userId: state.user.profile.id,
+    token: state.user.token
 })
 
 const mapDispatchToProps = dispatch => ({

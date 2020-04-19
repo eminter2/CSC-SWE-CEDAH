@@ -39,8 +39,8 @@ const Login = (props) => {
 }
 
 const mapStateToProps = state => ({
-    loginError: state.reducer.loginError,
-    isAuthenticated: state.reducer.isAuthenticated
+    loginError: state.user.loginError,
+    isAuthenticated: state.user.isAuthenticated
 })
 
 const mapDispatchToProps = dispatch => ({
