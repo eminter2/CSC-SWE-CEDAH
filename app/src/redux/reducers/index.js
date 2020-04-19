@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import userReducer from './userReducer';
 import groupReducer from './groupReducer';
+import { appReducer } from './appReducer';
 
 export default combineReducers({
- user: userReducer,
- groups: groupReducer
+    app: appReducer,
+    user: userReducer,
+    groups: groupReducer
 })
