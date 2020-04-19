@@ -128,4 +128,30 @@ public class MeetupGroupController {
         }
         return ResponseEntity.status(status).body(response);
     }
+
+
+    @PostMapping("/leave")
+    public ResponseEntity<?> leaveGroup(
+            @RequestParam("groupId") int groupId,
+            @RequestParam("userId") int userId){
+        
+        JSONObject response = new JSONObject();
+        int status = 200;
+        try {
+            System.out.println("Removing " + userId + "from group " + groupId);
+            int val = groupMembershipRepository.deleteFromGroup(userId, groupId);
+            if ( val > 0 ) {
+                response.put("data", "You have been successfully removed from the group.");
+            }
+            else {
+                response.put("data", "Something went wrong");
+                status = 500;
+            }
+        } catch (Exception e){
+            status = 500;
+            response.put("message", e.toString());
+        }
+
+        return ResponseEntity.status(status).body(response);
+    }
 }
