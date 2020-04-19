@@ -4,10 +4,10 @@ import {Col, Nav, Row, Tab} from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
 const Groupviewer = () => {
-    let groupId = useParams().id
+    let groupName = useParams().id
     return (
         <div className="page group-viewer">
-            <h1 className="slimshady">Group {groupId}</h1>
+            <h1 className="slimshady">{groupName}</h1>
             <Tab.Container defaultActiveKey="first" >
                 <Row
                     style={{
