@@ -98,6 +98,31 @@ export const joinGroup = (userId, token, groupName) => {
     }
 }
 
+export const leaveGroup = (groupId, userId, token) => {
+    console.log('leaving group...')
+    return dispatch => {
+        return fetch(`/groups/leave?groupId=${groupId}&userId=${userId}`, {
+            method: 'POST',
+                cache: 'no-cache',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.message){
+                    console.log('Something went wrong:\n', data.message)
+                }
+                else {
+                    console.log('Response: ', data.data)
+                }
+            })
+            .catch(err => console.log('Error: ', err))
+    }
+}
+
 const setGroups = (groups) => ({
     type: 'FETCH_GROUPS',
     payload: groups
