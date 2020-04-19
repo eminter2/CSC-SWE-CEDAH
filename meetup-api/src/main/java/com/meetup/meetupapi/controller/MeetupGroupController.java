@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.meetup.meetupapi.model.GroupMembership;
 import com.meetup.meetupapi.model.MeetupGroup;
+import com.meetup.meetupapi.model.UserAvailability;
 import com.meetup.meetupapi.repo.GroupMembershipRepository;
 import com.meetup.meetupapi.repo.MeetupGroupRepository;
+import com.meetup.meetupapi.repo.UserAvailabilityRepository;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -21,12 +23,15 @@ public class MeetupGroupController {
 
     private MeetupGroupRepository meetupGroupRepository;
     private GroupMembershipRepository groupMembershipRepository;
+    private UserAvailabilityRepository userAvailabilityRepository;
 
     public MeetupGroupController(
             MeetupGroupRepository meetupGroupRepository, 
-            GroupMembershipRepository groupMembershipRepository){
+            GroupMembershipRepository groupMembershipRepository,
+            UserAvailabilityRepository userAvailabilityRepository){
         this.meetupGroupRepository = meetupGroupRepository;
         this.groupMembershipRepository = groupMembershipRepository;
+        this.userAvailabilityRepository = userAvailabilityRepository;
     }
 
     @PostMapping("/retrieve")
@@ -160,5 +165,23 @@ public class MeetupGroupController {
         }
 
         return ResponseEntity.status(status).body(response);
+    }
+
+    @PostMapping("/availabilities")
+    public ResponseEntity<?> getAvailabilities(
+            @RequestParam("id") long userId
+    ){
+        List<UserAvailability> availabilitiesList = userAvailabilityRepository.findAllByUserId(userId);
+        for(UserAvailability availability: availabilitiesList){
+            System.out.println(
+                    "Availability: " +
+                    availability.getUser().getFullName() + "\n" +
+                    availability.getDay() + "\n" +
+                    availability.getStart_time() + "\n" +
+                    availability.getEnd_time() + "\n"
+            );      
+        }
+
+        return ResponseEntity.status(200).body("ok");
     }
 }
