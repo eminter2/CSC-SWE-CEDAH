@@ -5,11 +5,11 @@ const Member = (props) => {
     return (
         <Card style={{marginBottom: 15}}>
             <Card.Header as="h5">
-                {/* <strong>{props.member.fullName}</strong><br/> */}
-                <h4 style={{fontWeight: 700}}>{props.member.name}</h4>
+                <strong>Member: {props.member.name}</strong>
                 <br/>
-                <p>Email: {props.member.email}</p>
-                <p>Phone: {props.member.phone}</p>
+                <strong>Email: {props.member.email}</strong>
+                <br/>
+                <strong>Phone: {props.member.phone}</strong>
                 </Card.Header>
             <Card.Body>
                 <Card.Text>
