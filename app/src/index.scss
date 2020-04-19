@@ -110,6 +110,22 @@ body {
     .nav-link {
         color: black
     }
+
+    .leave-group.nav-link.active{
+        background: red;
+        color: white;
+    }
+    .nav-link.leave-group {
+        font-weight: 700;
+        color: red;
+    }
+}
+
+.leave-confirm {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .logout {
