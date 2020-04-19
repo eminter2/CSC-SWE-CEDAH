@@ -76,7 +76,7 @@ const App = (props) => {
           { props.isAuthenticated ?
               <> 
                 <Route href="" path="/dashboard" exact component = {Dashboard}/>
-                <Route href="" path="/group/view/:id" component={Groupviewer}/>
+                <Route href="" path="/group/view/:name/:id" component={Groupviewer}/>
                 <Route href="" path="/group/add" component={AddGroup}/>
                 <Route href="" path="/group/join" component={JoinGroup}/>
                 <Route href="" path="/logout" exact component={Logout} />
