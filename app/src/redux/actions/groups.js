@@ -46,10 +46,10 @@ export const getMembers = (groupId, token) => {
     }
 }
 
-export const addGroup = (userId, token) => {
+export const addGroup = (userId, token, groupName) => {
     console.log('made it to addGroup')
     return dispatch => {
-        return fetch(`/groups/add?id=${userId}`, {
+        return fetch(`/groups/add?id=${userId}&name=${groupName}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -60,7 +60,13 @@ export const addGroup = (userId, token) => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Response: ', data.data)
+            if(data.message){
+                console.log('Something went wrong:\n', data.message)
+                // dispatch(addGroupResponse("Success!"))
+            }
+            else{
+                console.log('Response: ', data.data)
+            }
             // dispatch(addGroup(data.group))
         })
         .catch(err => console.log('Error: ', err))
@@ -82,7 +88,6 @@ export const joinGroup = (userId, token) => {
         .then(response => response.json())
         .then(data => {
             console.log('Response: ', data.data)
-            // dispatch(addGroup(data.group))
         })
         .catch(err => console.log('Error: ', err))
     }
