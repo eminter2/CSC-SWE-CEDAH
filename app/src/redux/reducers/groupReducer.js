@@ -1,5 +1,6 @@
 const initialState = {
-    groupList: null
+    groupList: null,
+    members: null
 }
 
 export default function groupReducer(state = initialState, action){
@@ -8,6 +9,12 @@ export default function groupReducer(state = initialState, action){
             return {
                 ...state,
                 groupList: action.payload
+            }
+        case 'FETCH_MEMBERS': 
+            console.log('Fetch member reducer')
+            return {
+                ...state,
+                members: action.payload
             }
         default: 
             return state;
