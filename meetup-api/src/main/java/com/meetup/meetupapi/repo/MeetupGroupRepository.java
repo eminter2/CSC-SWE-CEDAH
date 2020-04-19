@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.meetup.meetupapi.model.MeetupGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface MeetupGroupRepository extends JpaRepository<MeetupGroup, Long> {
     @Query(
@@ -14,4 +16,15 @@ public interface MeetupGroupRepository extends JpaRepository<MeetupGroup, Long> 
         nativeQuery = true
     )
     List<MeetupGroup> findMyGroups(int userId);
+    
+    @Transactional
+    @Modifying
+    @Query(
+        value = "INSERT INTO meetup_group (group_name, owner_id) " +
+        "SELECT ?1,?2 " + 
+        "FROM dual " +
+        "WHERE NOT EXISTS (SELECT group_name FROM meetup_group WHERE group_name=?1);",
+        nativeQuery = true
+    )
+    int createGroup(String groupName, int userId);
 }
