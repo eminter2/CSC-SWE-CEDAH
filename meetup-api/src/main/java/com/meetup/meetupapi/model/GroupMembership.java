@@ -8,10 +8,11 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity 
 @IdClass(GroupMembership.class)
-@Table(name = "group_membership")
+@Table(name = "group_membership", uniqueConstraints = @UniqueConstraint(columnNames={}))
 public class GroupMembership implements Serializable{
     /**
      *
