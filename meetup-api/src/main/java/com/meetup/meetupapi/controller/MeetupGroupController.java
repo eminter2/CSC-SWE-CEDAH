@@ -2,7 +2,9 @@ package com.meetup.meetupapi.controller;
 
 import java.util.List;
 
+import com.meetup.meetupapi.model.GroupMembership;
 import com.meetup.meetupapi.model.MeetupGroup;
+import com.meetup.meetupapi.repo.GroupMembershipRepository;
 import com.meetup.meetupapi.repo.MeetupGroupRepository;
 
 import org.json.simple.JSONArray;
@@ -18,9 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class MeetupGroupController {
 
     private MeetupGroupRepository meetupGroupRepository;
+    private GroupMembershipRepository groupMembershipRepository;
 
-    public MeetupGroupController(MeetupGroupRepository meetupGroupRepository){
+    public MeetupGroupController(
+            MeetupGroupRepository meetupGroupRepository, 
+            GroupMembershipRepository groupMembershipRepository){
         this.meetupGroupRepository = meetupGroupRepository;
+        this.groupMembershipRepository = groupMembershipRepository;
     }
 
     @PostMapping("/retrieve")
@@ -46,6 +52,31 @@ public class MeetupGroupController {
             System.out.println("Query failed");
             status = 500;
             response.put("message", "Query Failed");
+        }
+
+        return ResponseEntity.status(status).body(response);
+    }
+
+    @PostMapping("/members")
+    public ResponseEntity<?> getMembers(@RequestParam("id") int groupId){
+        JSONObject response = new JSONObject();
+        JSONArray memberArr = new JSONArray();
+        int status = 200;
+        List<GroupMembership> members;
+        System.out.println("id" + groupId);
+        try {
+            members = groupMembershipRepository.findMembers(groupId);
+            for (GroupMembership groupMembership : members) {
+                JSONObject inner = new JSONObject();
+                inner.put("id", groupMembership.getUser().getId());
+                inner.put("email", groupMembership.getUser().getEmail());
+                inner.put("phone", groupMembership.getUser().getPhone());
+                memberArr.add(inner);
+            }
+            response.put("members", memberArr);
+
+        } catch(Exception e){
+            status = 500;
         }
 
         return ResponseEntity.status(status).body(response);
