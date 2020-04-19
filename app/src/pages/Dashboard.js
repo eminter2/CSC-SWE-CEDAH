@@ -4,34 +4,31 @@ import {getUserInfo} from '../redux/actions/user';
 import {getMyGroups} from '../redux/actions/groups';
 import Meeting from '../components/Meeting';
 import Group from '../components/Group';
-import {CardDeck, CardColumns} from 'react-bootstrap';
+import {CardDeck, CardColumns, Spinner} from 'react-bootstrap';
 import DashboardControl from '../components/DashboardControl';
 
 const Dashboard = (props) => {
 
     const [loading, setLoading] = useState(true)
-    const [fakeMeetingList, setfakeMeetingList] = useState()
-    const [fakeGroupList, setfakeGroupList] = useState()
     const [showGroups, toggleShowGroups] = useState(true)
 
     useEffect(() => {
-        // generateData();
         getData();
     },[])
 
-    const getData = async () => {
+    const getData = () => {
         console.log(props)
         setLoading(true)
-        await props.getUserInfo(props.username, props.token)
-        await props.getMyGroups(1, props.token)
+        props.getMyGroups(1, props.token)
         setLoading(false)
     }
 
     if(!loading){
-
-        // const allGroups = 
-        
-        
+        const allGroups = props.groupList.map((group) => (
+            <Group
+                key={group.group_id}
+                group={group}/>
+        ))
         return (
             <div className="page dashboard">
                 <h1>Welcome to the Dashboard, {props.username}!</h1>
@@ -39,7 +36,7 @@ const Dashboard = (props) => {
                     { 
                         showGroups ? 
                         <div style={{width: '80%', margin: 'auto'}}>
-                            {/* {allGroups} */}
+                            {allGroups}
                         </div>
                         :
                         <CardDeck style={{width: '80%', margin: 'auto'}}>
@@ -53,7 +50,7 @@ const Dashboard = (props) => {
     }
     else{
         return (
-            <p>Loading...</p>
+            <Spinner animation="border" size="lg"/>
             )
         }
     }
@@ -61,8 +58,8 @@ const Dashboard = (props) => {
     const mapStateToProps = state => ({
         token: state.user.token,
         username: state.user.username,
-        // userId: state.user.profile.id,
-        // groups: state.groups.groupList
+        userId: state.user.profile.id,
+        groupList: state.groups.groupList
     })
     
     const mapDispatchToProps = dispatch => ({
@@ -78,36 +75,4 @@ const Dashboard = (props) => {
     //             key={meeting.MeetingNo} 
     //             meeting={meeting}/>)
     //         )
-    // const allGroups = fakeGroupList.map((group) => (
-        //         <Group 
-        //             key={group.GroupNumber} 
-        //             group={group}/>)
-        //         )
     
-    
-    // const generateData = () => {
-        //     props.getUserInfo(props.username, props.token)
-        //     setLoading(false)
-        //     let tempArrayMeeting=[]
-        //     let tempArrayGroup=[]
-        //     setLoading(true)
-        //     let count = 9;
-        //     while(count<18){
-            //         tempArrayMeeting.push({
-//             'MeetingNo': `Meeting ${count-8}`,
-//             'Start': `${count}:00`,
-//             'End': `${count}:30`,
-//             'Host': 'Connor'
-//         })
-//         if(count<13){
-    //             tempArrayGroup.push({
-        //                 'GroupNumber': `${count-8}`,
-        //                 'Owner': 'Connor'
-        //             })
-        //         }
-        //     count+=1;
-        //     }
-        //     setfakeMeetingList(tempArrayMeeting)
-        //     setfakeGroupList(tempArrayGroup)
-        //     setLoading(false)
-        // }
