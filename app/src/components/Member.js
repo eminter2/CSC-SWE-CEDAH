@@ -6,7 +6,8 @@ const Member = (props) => {
         <Card style={{marginBottom: 15}}>
             <Card.Header as="h5">
                 {/* <strong>{props.member.fullName}</strong><br/> */}
-                <strong>Barack Obama</strong><br/>
+                <h4 style={{fontWeight: 700}}>{props.member.name}</h4>
+                <br/>
                 <p>Email: {props.member.email}</p>
                 <p>Phone: {props.member.phone}</p>
                 </Card.Header>

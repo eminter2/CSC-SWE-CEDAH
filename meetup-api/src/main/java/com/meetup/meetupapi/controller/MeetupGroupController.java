@@ -69,6 +69,7 @@ public class MeetupGroupController {
             for (GroupMembership groupMembership : members) {
                 JSONObject inner = new JSONObject();
                 inner.put("id", groupMembership.getUser().getId());
+                inner.put("name", groupMembership.getUser().getFullName());
                 inner.put("email", groupMembership.getUser().getEmail());
                 inner.put("phone", groupMembership.getUser().getPhone());
                 memberArr.add(inner);
