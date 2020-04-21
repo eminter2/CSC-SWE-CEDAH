@@ -16,7 +16,7 @@ public class fulldailyschedule {
 	@Setter
 	private String day;
 	private Long id;
-	private ArrayList dailyschedule;
+	private ArrayList dailyschedule = new ArrayList();
 	public fulldailyschedule(String day, Long id, List<UserAvailability> availabilitiesList) {
 		ArrayList<UserAvailability> temp = new ArrayList<UserAvailability>();
 		this.day = day;

@@ -54,7 +54,7 @@ public class ScheduleEngine {
 				meettime.setEnd_time(end);
 				possibilities.add(meettime);
 				/*
-				 * 
+				 *
 				 */
 			}
 		}
