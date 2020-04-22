@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.meetup.meetupapi.model.GroupMembership;
 import com.meetup.meetupapi.model.MeetingPossibility;
-import com.meetup.meetupapi.model.Meetup;
+import com.meetup.meetupapi.model.Meeting;
 import com.meetup.meetupapi.model.MeetupGroup;
 import com.meetup.meetupapi.model.UserAvailability;
 import com.meetup.meetupapi.repo.GroupMembershipRepository;
