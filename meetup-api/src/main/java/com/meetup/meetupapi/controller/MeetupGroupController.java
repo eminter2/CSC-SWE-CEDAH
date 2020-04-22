@@ -9,6 +9,7 @@ import com.meetup.meetupapi.model.Meeting;
 import com.meetup.meetupapi.model.MeetupGroup;
 import com.meetup.meetupapi.model.UserAvailability;
 import com.meetup.meetupapi.repo.GroupMembershipRepository;
+import com.meetup.meetupapi.repo.MeetingRepository;
 import com.meetup.meetupapi.repo.MeetupGroupRepository;
 import com.meetup.meetupapi.repo.UserAvailabilityRepository;
 import com.meetup.meetupapi.services.ScheduleEngine;
@@ -29,6 +30,7 @@ public class MeetupGroupController {
     private MeetupGroupRepository meetupGroupRepository;
     private GroupMembershipRepository groupMembershipRepository;
     private UserAvailabilityRepository userAvailabilityRepository;
+    private MeetingRepository meetingRepository;
     public MeetupGroupController(
             MeetupGroupRepository meetupGroupRepository, 
             GroupMembershipRepository groupMembershipRepository,
